@@ -27,7 +27,7 @@
           :to="item.link"
         >
             <v-list-item-icon>
-                <v-icon>{{ item.icon }}</v-icon>
+                <v-icon :color="item.color">{{ item.icon }}</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
@@ -43,9 +43,9 @@ export default {
      data () {
       return {
         items: [
-          { title: 'Dashboard', icon: 'mdi-view-dashboard', link:'/'},
-          { title: 'Photos', icon: 'mdi-image', link:'/'},
-          { title: 'About', icon: 'mdi-help-box', link:'/form'},
+          { title: '¡Debes ver esto!', icon: 'mdi-star-four-points', link:'/',color:'yellow'},
+          { title: 'Categorias', icon: 'mdi-view-dashboard', link:'/', color:'blue'},
+          { title: 'Acerca de Aniimam', icon: 'mdi-help-box', link:'/form', color:'green'},
         ],
         right: null,
       }

@@ -3,7 +3,16 @@ import { Api } from '../../helpers/api'
 const api = new Api(Api.ROUTES().empty);
 
 const state = {
-  token:''
+  token:'',
+  login:'',
+  firstName:'',
+  lastName:'',
+  email:'',
+  imageUrl:'',
+  otakuRating:0,
+  mercaderRating:0,
+  phone:'',
+  country:''
 }
 
 const getters = {
@@ -32,7 +41,17 @@ const actions = {
     }).catch(function (error){
        return Promise.reject(error);
     })
-  }
+  },
+  registerExtUser(context,data){
+    api.request('/register','post',data)
+    .then(res => {
+      console.log(res)
+      return Promise.resolve('Success');
+    }).catch(function (error){
+       return Promise.reject(error);
+    })
+  },
+  
 }
 
 const mutations = {
