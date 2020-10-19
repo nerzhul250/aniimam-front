@@ -43,7 +43,7 @@ const actions = {
     })
   },
   registerExtUser(context,data){
-    api.request('/register','post',data)
+    api.request('/ext/register-user','post',data)
     .then(res => {
       console.log(res)
       return Promise.resolve('Success');

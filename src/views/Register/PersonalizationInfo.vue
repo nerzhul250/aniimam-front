@@ -10,8 +10,31 @@
                     <v-select :items="channels" :rules="channelRule" label="¿Como llegaste a nosotros?" outlined v-model="channel"/>
                     <v-text-field label="Numero telefonico" required :rules="phoneRules" v-model="phone"></v-text-field>
                     <v-autocomplete :items="countries" label="Pais" outlined :rules="countryRule" v-model="country"/>
-                    <v-btn @click="submit" :disabled="!valid">Finalizar registro</v-btn>
+                    <div class="d-flex justify-center">
+                        <v-btn 
+                            fab
+                            dark
+                            color="orange"
+                            @click="submit"
+                            :disabled="!valid"
+                        >
+                            <v-icon>
+                                mdi-checkbox-marked-circle
+                            </v-icon>
+                        </v-btn>
+                    </div>
                 </v-form>
+                <v-alert
+                    v-model="errorAlert"
+                    border="right"
+                    colored-border
+                    type="error"
+                    elevation="2"
+                    dismissible
+                    class="mt-10"
+                >
+                    Ha habido un error, intente de nuevo mas tarde
+                </v-alert>
             </v-col>
             <v-col cols="3">
             </v-col>
@@ -41,13 +64,12 @@ export default {
             arrivedFromChannel:'',
 
             channels: [
-                'Un amigo te contó',
+                'Alguien te contó',
                 'Google',
                 'Facebook',
                 'Youtube',
                 'Instagram',
                 'Blog',
-                'Otra manera'
             ],
 
             phoneRules: [
@@ -59,14 +81,21 @@ export default {
             channelRule: [
                 c => !!c || '¿Como escuchaste de nosotros?',
             ],
+
+            errorAlert:false
         }
     },
     methods: {
         submit(){
             if(this.valid){
-                AuthRepository.registerExtUser(this.login,this.firstName,
+                let res=AuthRepository.registerExtUser(this.login,this.firstName,
                                                 this.lastName,this.email,this.password,
                                                 this.country,this.channel,this.phone);
+                if(res){
+                    
+                }else{
+                    this.errorAlert=true;
+                }
             }
         }
     }  
