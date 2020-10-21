@@ -7,6 +7,9 @@ import Form from './components/Form'
 import ProductList from './views/Products/ProductList'
 import BasicInfo from './views/Register/BasicInfo'
 import PersonalizationInfo from './views/Register/PersonalizationInfo'
+import RegistrationConfirmation from './views/Register/RegistrationConfirmation'
+import EmailConfirmation from './views/Register/EmailConfirmation'
+import Login from './views/Login/Login'
 
 export default new Router({
     routes:[
@@ -23,13 +26,28 @@ export default new Router({
         {
             path: '/registration/personalization-info',
             name: 'personalization-info',
-            component: PersonalizationInfo 
+            component: PersonalizationInfo,
+            props: true 
         },
-        
+        {
+            path:'/registration/registration-confirmation',
+            name: 'registration-confirmation',
+            component: RegistrationConfirmation
+        },
+        {
+            path:'/registration/email-confirmation',
+            name: 'email-confirmation',
+            component: EmailConfirmation
+        },
+        {
+            path:'/login',
+            name:'login',
+            component: Login
+        },
         {
             path: '/form',
             name: 'form',
             component: Form
-        }
+        },
     ]
 })

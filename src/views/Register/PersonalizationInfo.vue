@@ -88,14 +88,22 @@ export default {
     methods: {
         submit(){
             if(this.valid){
-                let res=AuthRepository.registerExtUser(this.login,this.firstName,
+                AuthRepository.registerExtUser(this.login,this.firstName,
                                                 this.lastName,this.email,this.password,
-                                                this.country,this.channel,this.phone);
-                if(res){
-                    
-                }else{
+                                                this.country,this.channel,this.phone)
+                .then((res)=>{
+                    if(res.status<400){
+                        this.$router.push({
+                            name:'registration-confirmation'
+                        })
+                    }else{
+                        this.errorAlert=true;
+                    }
+                }).catch((e)=>{
+                    console.log(e)
                     this.errorAlert=true;
-                }
+                })
+            
             }
         }
     }  

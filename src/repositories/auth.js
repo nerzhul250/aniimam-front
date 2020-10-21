@@ -31,6 +31,22 @@ class AuthRepository{
         }
         return store.dispatch("auth/registerExtUser",data);
     }
+
+    usernameOrEmailExists(username,email){
+        let data={
+            username:username,
+            email:email
+        }
+        return store.dispatch("auth/usernameOrEmailExists",data)
+    }
+
+    login(username,password){
+        let data = {
+            username:username,
+            password:md5(password)
+        }
+        return store.dispatch("auth/login",data)
+    }
 }
 
 export default new AuthRepository();

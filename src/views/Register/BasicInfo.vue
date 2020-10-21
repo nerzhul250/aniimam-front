@@ -32,6 +32,28 @@
                         </v-btn>
                     </div>
                 </v-form>
+                <v-alert
+                    v-model="errorAlert"
+                    border="right"
+                    colored-border
+                    type="error"
+                    elevation="2"
+                    dismissible
+                    class="mt-10"
+                >
+                    Ya existe una cuenta con ese email
+                </v-alert>
+                <v-alert
+                    v-model="errorAlert2"
+                    border="right"
+                    colored-border
+                    type="error"
+                    elevation="2"
+                    dismissible
+                    class="mt-10"
+                >
+                    Ya existe una cuenta con ese nombre de usuario
+                </v-alert>
             </v-col>
             <v-col cols="3">
             </v-col>
@@ -40,9 +62,14 @@
 </template>
 
 <script>
+
+import AuthRepository from '../../repositories/auth'
+
 export default {
     data(){
         return {
+            errorAlert:false,
+            errorAlert2:false,
             valid:false,
             login:"",
             firstName:"",
@@ -75,16 +102,27 @@ export default {
     methods: {
         next(){
             if(this.valid){
-                this.$router.push({
-                    name: 'personalization-info',
-                    params: {
-                        firstName: this.firstName,
-                        lastName: this.lastName,
-                        email: this.email,
-                        login: this.username,
-                        password: this.password,
+                AuthRepository.usernameOrEmailExists(this.login,this.email).then((res)=>{
+                    let data=res.data;
+                    if(data==-1){
+                        this.$router.push({
+                            name: 'personalization-info',
+                            params: {
+                                firstName: this.firstName,
+                                lastName: this.lastName,
+                                email: this.email,
+                                login: this.login,
+                                password: this.password,
+                            }
+                        });
+                    }else if(data==1){
+                        this.errorAlert=true;
+                        this.errorAlert2=false;
+                    }else{
+                        this.errorAlert=false;
+                        this.errorAlert2=true;
                     }
-                });
+                })
             }
         }
     }

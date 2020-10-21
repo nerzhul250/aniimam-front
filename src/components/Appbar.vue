@@ -36,6 +36,7 @@
       <v-btn
         class="black--text mr-5"
         color="white"
+        to="/login"
       >
         <v-icon
           color="orange"

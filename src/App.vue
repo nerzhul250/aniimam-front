@@ -25,7 +25,10 @@ export default {
   data: () => ({
     outOfAppExceptionRoutes: [
             'basic-info',
-            'personalization-info'
+            'personalization-info',
+            'login',
+            'email-confirmation',
+            'registration-confirmation'
     ],
   }),
 };

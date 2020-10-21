@@ -43,15 +43,11 @@ const actions = {
     })
   },
   registerExtUser(context,data){
-    api.request('/ext/register-user','post',data)
-    .then(res => {
-      console.log(res)
-      return Promise.resolve('Success');
-    }).catch(function (error){
-       return Promise.reject(error);
-    })
+    return api.request('/ext/register-user','post',data)
   },
-  
+  usernameOrEmailExists(context,data){
+    return api.request(`/ext/users/exists?username=${data.username}&email=${data.email}`,'get')
+  }
 }
 
 const mutations = {
