@@ -28,7 +28,9 @@ export default {
             'personalization-info',
             'login',
             'email-confirmation',
-            'registration-confirmation'
+            'registration-confirmation',
+            'profile',
+            'public-profile'
     ],
   }),
 };

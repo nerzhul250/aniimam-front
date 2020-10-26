@@ -10,6 +10,8 @@ import PersonalizationInfo from './views/Register/PersonalizationInfo'
 import RegistrationConfirmation from './views/Register/RegistrationConfirmation'
 import EmailConfirmation from './views/Register/EmailConfirmation'
 import Login from './views/Login/Login'
+import Profile from './views/Profile/Profile'
+import PublicProfile from './views/Profile/PublicProfile'
 
 export default new Router({
     routes:[
@@ -43,6 +45,17 @@ export default new Router({
             path:'/login',
             name:'login',
             component: Login
+        },
+        {
+            path:'/profile',
+            name:'profile',
+            component:Profile
+        },
+        {
+            path:'/p/:username',
+            name: 'public-profile',
+            component: PublicProfile,
+            props:true
         },
         {
             path: '/form',

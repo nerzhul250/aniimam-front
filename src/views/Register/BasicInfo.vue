@@ -1,64 +1,58 @@
 <template>
-    <v-container>
-        <v-row style="height:100%">
-            <v-col cols="3">
-            </v-col>
-            <v-col cols="6">
-                <div class="d-flex justify-center">    
-                    <v-img 
-                        src="../../assets/aniimamLogo.png"
-                        contain
-                        height="100px"
-                        width="150px"
-                    ></v-img>
+    <div class="d-flex justify-center align-center mt-16">
+        <v-card>
+            <div class="d-flex justify-center">    
+                <v-img 
+                    src="../../assets/aniimamLogo.png"
+                    contain
+                    height="100px"
+                    width="150px"
+                ></v-img>
+            </div>
+            <v-form v-model="valid" class="px-10 pb-10">
+                <v-text-field label="Nombre de usuario" required :rules="loginRule" v-model="login"></v-text-field>
+                <v-text-field label="Nombre" required :rules="firstNameRule" v-model="firstName"></v-text-field>
+                <v-text-field label="Apellido" required :rules="lastNameRule" v-model="lastName"></v-text-field>
+                <v-text-field label="Email" required :rules="emailRule" v-model="email"></v-text-field>
+                <v-text-field label="Contraseña" required :rules="passwordRule" type='password' v-model="password"></v-text-field>
+                <div class="d-flex justify-center">
+                    <v-btn 
+                        fab
+                        dark
+                        color="orange"
+                        @click="next" 
+                        :disabled="!valid"
+                    >
+                        <v-icon>
+                            mdi-arrow-right-thick
+                        </v-icon>
+                    </v-btn>
                 </div>
-                <v-form v-model="valid">
-                    <v-text-field label="Nombre de usuario" required :rules="loginRule" v-model="login"></v-text-field>
-                    <v-text-field label="Nombre" required :rules="firstNameRule" v-model="firstName"></v-text-field>
-                    <v-text-field label="Apellido" required :rules="lastNameRule" v-model="lastName"></v-text-field>
-                    <v-text-field label="Email" required :rules="emailRule" v-model="email"></v-text-field>
-                    <v-text-field label="Contraseña" required :rules="passwordRule" type='password' v-model="password"></v-text-field>
-                    <div class="d-flex justify-center">
-                        <v-btn 
-                            fab
-                            dark
-                            color="orange"
-                            @click="next" 
-                            :disabled="!valid"
-                        >
-                            <v-icon>
-                                mdi-arrow-right-thick
-                            </v-icon>
-                        </v-btn>
-                    </div>
-                </v-form>
-                <v-alert
-                    v-model="errorAlert"
-                    border="right"
-                    colored-border
-                    type="error"
-                    elevation="2"
-                    dismissible
-                    class="mt-10"
-                >
-                    Ya existe una cuenta con ese email
-                </v-alert>
-                <v-alert
-                    v-model="errorAlert2"
-                    border="right"
-                    colored-border
-                    type="error"
-                    elevation="2"
-                    dismissible
-                    class="mt-10"
-                >
-                    Ya existe una cuenta con ese nombre de usuario
-                </v-alert>
-            </v-col>
-            <v-col cols="3">
-            </v-col>
-        </v-row>
-    </v-container>
+            </v-form>
+            <v-alert
+                v-model="errorAlert"
+                border="right"
+                colored-border
+                type="error"
+                elevation="2"
+                dismissible
+                class="mt-10"
+            >
+                Ya existe una cuenta con ese email
+            </v-alert>
+            <v-alert
+                v-model="errorAlert2"
+                border="right"
+                colored-border
+                type="error"
+                elevation="2"
+                dismissible
+                class="mt-10"
+            >
+                Ya existe una cuenta con ese nombre de usuario
+            </v-alert>
+        </v-card>
+    </div>
 </template>
 
 <script>

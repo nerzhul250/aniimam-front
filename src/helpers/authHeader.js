@@ -1,9 +1,8 @@
-import authRepository from '../repositories/auth'
-
+import store from '../store/index'
 export default function authHeader() {
-    let accessToken = authRepository.getUserToken();
+    let accessToken = store.getters["auth/getUserToken"]
     if (accessToken) {
-      return { Authorization: accessToken };
+      return { 'Authorization': accessToken };
     } else {
       return {};
     }

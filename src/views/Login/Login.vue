@@ -2,9 +2,14 @@
     <div>
         <div class="d-flex justify-center align-center mt-16">
             <v-card>
-                <v-card-title>
-                    Login
-                </v-card-title>
+                <div class="d-flex justify-center">    
+                    <v-img 
+                        src="../../assets/aniimamLogo.png"
+                        contain
+                        height="100px"
+                        width="150px"
+                    ></v-img>
+                </div>
                 <v-form v-model="valid" class="mt-n15 px-10 pb-10">
                     <div class="mt-15">
                         <v-text-field
@@ -82,15 +87,22 @@ export default {
             u => (u.split(' ').length <= 1) || 'No se permiten espacios',
         ],
         passwordRules: [
-            p => !!p || 'Password es obligatorio'
+                p => !!p || 'Contraseña es obligatoria',
+                p => (p || '' ).length < 60 || 'Contraseña debe de tener menos de 60 caracteres',
+                p => (p || '' ).length > 6 || 'La contraseña debe de tener almenos 7 caracteres',
         ],
         password:""
     }),
     methods: {
-        submit(){
+        async submit(){
             if(this.valid){
-                AuthRepository.login(this.login,this.password).then((res)=>{
-                    console.log(res)
+                AuthRepository.login(this.login,this.password).then(async (res)=>{
+                    this.$store.commit('auth/setToken',`Bearer ${res.data.id_token}`);
+                    await AuthRepository.getUserData().then((res)=>{this.$store.commit('auth/setUser',res.data)});
+                    await this.$router.push('/');
+                }).catch((e)=>{
+                    console.log(e);
+                    this.errorAlert=true;
                 })
             }else{
                 this.errorAlert2=true;

@@ -4,55 +4,84 @@ const api = new Api(Api.ROUTES().empty);
 
 const state = {
   token:'',
-  login:'',
-  firstName:'',
-  lastName:'',
-  email:'',
-  imageUrl:'',
-  otakuRating:0,
-  mercaderRating:0,
-  phone:'',
-  country:''
+  user:{
+    login:'',
+    firstName:'',
+    lastName:'',
+    email:'',
+    imageUrl:'',
+    otakuRating:0,
+    mercaderRating:0,
+    phone:'',
+    country:'',
+    profileDescription:''
+  }
 }
 
 const getters = {
-  getUserToken: state => state.token
+  getUserToken: state => state.token,
+  getUser: state => state.user
 }
 
 const actions = {
-  login({commit}, data){
-    api.request('/authenticate','post',data)
-    .then(res =>{
-      commit('setToken','Bearer '+res.data.id_token);
-      return Promise.resolve('Success');
-    }).catch(function (error) {
-      return Promise.reject(error);
-    })
+  login(context, data){
+    return api.request('/authenticate','post',data)
   },
   logout({commit}){
     commit('setToken','');
     return Promise.resolve('Success');
-  },
-  registerUser(context,data){
-    api.request('/register','post',data)
-    .then(res => {
-      console.log(res)
-      return Promise.resolve('Success');
-    }).catch(function (error){
-       return Promise.reject(error);
-    })
   },
   registerExtUser(context,data){
     return api.request('/ext/register-user','post',data)
   },
   usernameOrEmailExists(context,data){
     return api.request(`/ext/users/exists?username=${data.username}&email=${data.email}`,'get')
+  },
+  getUserData(){
+     return api.request('/ext/account','get')
+  },
+  updateProfileData(context,data){
+    return api.request('/ext/users','put',data)
+  },
+  getUserPublicData(context,data){
+    return api.request(`/ext/users?username=${data.username}`,'get')
   }
 }
 
 const mutations = {
   setToken(state,token){
     state.token=token
+  },
+  setUser(state,user){
+    state.user.login=user.login
+    state.user.firstName=user.firstName
+    state.user.lastName=user.lastName
+    state.user.email=user.email
+    state.user.imageUrl=user.imageUrl
+
+    state.user.otakuRating=user.otakuRating
+    state.user.mercaderRating=user.mercaderRating
+    state.user.profileDescription=user.profileDescription
+    state.user.phone=user.phone
+    state.user.country=user.country
+  },
+  setFirstName(state,firstName){
+    state.user.firstName=firstName
+  },
+  setLastName(state,lastName){
+    state.user.lastName=lastName
+  },
+  setEmail(state,email){
+    state.user.email=email
+  },
+  setImageUrl(state,imageUrl){
+    state.user.imageUrl=imageUrl;
+  },
+  setPhone(state,phone){
+    state.user.phone=phone;
+  },
+  setProfileDescription(state,profileDescription){
+    state.user.profileDescription=profileDescription;
   }
 }
 
