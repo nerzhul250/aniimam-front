@@ -3,7 +3,6 @@ import Router from 'vue-router';
 
 Vue.use(Router);
 
-import Form from './components/Form'
 import ProductList from './views/Products/ProductList'
 import BasicInfo from './views/Register/BasicInfo'
 import PersonalizationInfo from './views/Register/PersonalizationInfo'
@@ -12,6 +11,7 @@ import EmailConfirmation from './views/Register/EmailConfirmation'
 import Login from './views/Login/Login'
 import Profile from './views/Profile/Profile'
 import PublicProfile from './views/Profile/PublicProfile'
+import ProductCreation from './views/Products/ProductCreation'
 
 export default new Router({
     routes:[
@@ -58,9 +58,9 @@ export default new Router({
             props:true
         },
         {
-            path: '/form',
-            name: 'form',
-            component: Form
+            path: '/create-product',
+            name: 'create-product',
+            component: ProductCreation
         },
     ]
 })

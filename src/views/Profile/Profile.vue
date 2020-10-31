@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-container>
-            <v-row style="height:100%">
+            <v-row style="height:50%">
                 <v-col cols="6">
                     <BasicInfoPanel
                         v-on:changed="change"
@@ -11,6 +11,14 @@
                     <AniimamDetailsPanel
                         v-on:changed="change"
                     />
+                </v-col>
+            </v-row>
+            <v-row style="height:50%">
+                <v-col cols="6">
+                    <PublishedProductsPanel/>
+                </v-col>
+                <v-col cols="6">
+                    
                 </v-col>
             </v-row>
         </v-container>
@@ -51,9 +59,13 @@
 <script>
 import BasicInfoPanel from './BasicInfoPanel'
 import AniimamDetailsPanel from './AniimamDetailsPanel'
+import PublishedProductsPanel from './PublishedProductsPanel'
+
 import AuthRepository from '../../repositories/auth'
+
+
 export default {
-    components:{BasicInfoPanel, AniimamDetailsPanel},
+    components:{BasicInfoPanel, AniimamDetailsPanel, PublishedProductsPanel},
     data(){
         return {
             changes:false,

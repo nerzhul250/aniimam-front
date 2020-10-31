@@ -30,7 +30,8 @@ export default {
             'email-confirmation',
             'registration-confirmation',
             'profile',
-            'public-profile'
+            'public-profile',
+            'create-product'
     ],
   }),
 };
