@@ -11,6 +11,9 @@ const getters = {
 const actions = {
     getUserPublishedProducts(){
         return api.request('/ext/products/user-published-products','get')
+    },
+    getProductCategories(){
+        return api.request('/product-categories','get')
     }
 }
 
