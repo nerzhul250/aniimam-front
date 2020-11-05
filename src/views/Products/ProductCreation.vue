@@ -1,7 +1,7 @@
 <template>
     <v-card class="mx-10 pa-10">
         <v-container>
-            <v-row style="height:80%">
+            <v-row style="height:100%">
                 <v-col cols="6">
                     <v-card-title>
                         ¡Publica!
@@ -27,7 +27,7 @@
                     <v-card-title>
                         ¡Sube imagenes!
                     </v-card-title>
-                    <v-card class="d-flex px-5 pt-5">
+                    <v-card class="d-flex px-5 pt-5 justify-center">
                         <v-image-input
                             v-model="imageData"
                             :image-quality="0.85"
@@ -49,12 +49,31 @@
                             </v-btn>
                         </div>
                     </v-card>
+                    <v-card class="d-flex flex-wrap pa-5 mt-5" v-if="productImages.length!=0">
+                        <v-card v-for="(image,i) in productImages" :key="i" class="mx-2">
+                            <img 
+                                v-bind:src="image" 
+                                class="image-wrapper"
+                                @click="editImage(image)"
+                            >
+                            <v-card-actions class="justify-center">
+                                <v-btn
+                                    icon
+                                    v-on:click="deleteImage(i)"
+                                >
+                                    <v-icon>
+                                         mdi-delete
+                                    </v-icon>
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card> 
+                    </v-card>
                 </v-col>
                 <v-col cols="6">
                     <v-card-title>
-                        Mas daticos
+                        Datos generales
                     </v-card-title>
-                    <v-card class="px-5 pt-5">
+                    <v-card class="pa-5">
                         <div class="d-flex">    
                             <v-text-field
                                 label="Unidades disponibles"
@@ -73,11 +92,12 @@
                                 return-object
                             ></v-autocomplete>
 
-                            <v-tooltip top>    
+                            <v-tooltip top color="orange">    
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-icon
                                         v-bind="attrs"
                                         v-on="on"
+                                        color="orange"
                                     >mdi-information</v-icon>
                                 </template>
                                 <span>
@@ -118,7 +138,7 @@
                                                 >
                                                     <v-icon
                                                         color="green"
-                                                        v-if="animeId==anime_request_result.mal_id"
+                                                        v-if="anime.mal_id==anime_request_result.mal_id"
                                                     >mdi-check-circle</v-icon>
                                                     <v-icon
                                                         color="orange"
@@ -146,34 +166,138 @@
                             </v-card-actions>
                         </v-card>
                     </v-card>
-                </v-col>
-            </v-row>
-            <v-row style="height:20%">
-                <v-col cols="6">
-                    <v-card class="d-flex flex-wrap pa-5" v-if="productImages.length!=0">
-                        <v-card v-for="(image,i) in productImages" :key="i" class="mx-2">
-                            <img 
-                                v-bind:src="image" 
-                                class="image-wrapper"
-                                @click="editImage(image)"
-                            >
-                            <v-card-actions class="justify-center">
+                    <v-card-title>
+                        Datos de ubicación del producto
+                    </v-card-title>
+                    <v-card class="px-5 pt-5">
+                        <v-window
+                            v-model="onboarding_location"
+                        >
+                            <v-window-item>
+                                <v-card-title v-if="!!location">
+                                    Direccion: {{location.address}} <br>
+                                    Ciudad: {{location.city}}
+                                </v-card-title>
+                                <v-card-title v-else>
+                                    Selecciona una dirección
+                                </v-card-title>
+                                <v-virtual-scroll
+                                    :items="user_locations"
+                                    item-height="70"
+                                    height="100"
+                                    v-if="!!user_locations"
+                                >
+                                    <template v-slot:default="{ item }">
+                                        <v-list-item>
+                                            <v-list-item-content>
+                                                <v-list-item-title>
+                                                    Ciudad: <strong>{{item.city}}</strong>
+                                                </v-list-item-title>
+                                                <v-list-item-title>
+                                                    Direccion: <strong>{{item.address}}</strong>
+                                                </v-list-item-title>
+                                            </v-list-item-content>
+                                            <v-list-item-action>
+                                                <v-btn
+                                                    fab
+                                                    small
+                                                    depressed
+                                                    icon
+                                                    @click="select_location(item)"
+                                                >
+                                                    <v-icon
+                                                        color="green"
+                                                        v-if="item.id==location.id"
+                                                    >mdi-plus-circle</v-icon>
+                                                    <v-icon
+                                                        color="primary"
+                                                        v-else
+                                                    >mdi-plus-circle</v-icon>
+                                                    
+                                                </v-btn>
+                                            </v-list-item-action>
+                                        </v-list-item>
+                                        <v-divider></v-divider>
+                                    </template>
+                                </v-virtual-scroll>
+                                <v-card-title v-else>
+                                    No tienes direcciones actualmente registradas.
+                                    Dale click abajito para agregar una nueva direccion 
+                                </v-card-title>
+                            </v-window-item>
+                            <v-window-item>
+                                <v-card-title>
+                                    Agrega una nueva dirección
+                                </v-card-title>
+                                <v-text-field
+                                    label="Dirección"
+                                    v-model="address"
+                                >
+                                </v-text-field>
+                                <v-select
+                                    :items="colombianCities"
+                                    v-model="city"
+                                    return-object
+                                >
+                                </v-select>
+                            </v-window-item>
+                        </v-window>
+                        <v-card-actions class="d-flex justify-center">
+                            <div v-if="onboarding_location==0">
                                 <v-btn
                                     icon
-                                    v-on:click="deleteImage(i)"
+                                    @click="switch_onboarding_location"
                                 >
-                                    <v-icon>
-                                         mdi-delete
-                                    </v-icon>
+                                    <v-icon color="orange">mdi-plus</v-icon>
                                 </v-btn>
-                            </v-card-actions>
-                        </v-card> 
+                            </div>
+                            <div v-else>
+                                <v-btn
+                                    icon
+                                    @click="switch_onboarding_location"
+                                >
+                                    <v-icon color="orange">mdi-arrow-left-circle</v-icon>
+                                </v-btn>
+                                <v-btn
+                                    icon
+                                    @click="save_new_location"
+                                >
+                                    <v-icon color="orange">mdi-plus-box</v-icon>
+                                </v-btn>
+                            </div>
+                        </v-card-actions>
                     </v-card>
-                </v-col>
-                <v-col cols="6">
+                    <v-card-title>
+                        Descripción del producto
+                    </v-card-title>
+                    <v-textarea
+                        solo
+                        v-model="description"
+                    >
+                    </v-textarea>
                 </v-col>
             </v-row>
         </v-container>
+        <v-card-actions>
+            <div class="d-flex justify-start">
+                <v-btn
+                    color="red"
+                    class="white--text"
+                    to="/profile"
+                >
+                    ir al perfil
+                </v-btn>
+            </div>
+            <v-spacer></v-spacer>
+            <div class="d-flex justify-end">
+                 <v-btn
+                    color="orange"
+                    class="white--text"
+                >
+                    ¡Publicar producto!
+                </v-btn>
+            </div>
+        </v-card-actions>
     </v-card>
 </template>
 
@@ -181,7 +305,12 @@
 <script>
 import VImageInput from 'vuetify-image-input/a-la-carte';
 import jikanApi from '../../helpers/jikanApi';
-import ProductRepository from '../../repositories/product'
+import colombianCities from './colombianCities'
+
+import ProductRepository from '../../repositories/product';
+import LocationRepository from '../../repositories/location';
+
+
 
 export default {
     components: {
@@ -191,18 +320,26 @@ export default {
         return {
             valid:false,
             imageData:undefined,
+            colombianCities:colombianCities,
             errors: {},
             anime_request_results:'',
             anime_request_query:'',
             onboarding: 0,
             product_categories:'',
+            onboarding_location:0,
+            user_locations:'',
+            address:'',
+            city:'Cali',
 
             productImages:[],
             price: 0,
-            animeId:'',
+            anime:'',
             stock: 0,
             title:'',
             productCategory:'',
+            location:'',
+            description:'',
+
 
             stockRules: [
                 s => !!s || 'Se debe de especificar un numero de unidades disponibles',
@@ -229,8 +366,24 @@ export default {
             })
         },
         select_anime(anime){
-            this.animeId=anime.mal_id;
+            this.anime=anime;
             this.anime_request_query=anime.title
+        },
+        select_location(location){
+            this.location=location;
+        },
+        save_new_location(){
+            LocationRepository.saveNewLocation(this.city,this.address).then((res1)=>{
+                console.log(res1)
+                 LocationRepository.getUserLocations().then((res)=>{
+                    this.user_locations=res.data
+                    this.onboarding_location=0;
+                })
+            })
+        },
+
+        switch_onboarding_location(){
+            this.onboarding_location=1-this.onboarding_location
         },
         next () {
             this.onboarding = this.onboarding + 1 === this.anime_request_results.length
@@ -251,7 +404,10 @@ export default {
     mounted(){
         ProductRepository.getProductCategories().then((res)=>{
             this.product_categories=res.data;
-            console.log(this.product_categories)
+        })
+        LocationRepository.getUserLocations().then((res)=>{
+            this.user_locations=res.data
+            console.log(this.user_locations)
         })
     },
     watch:{

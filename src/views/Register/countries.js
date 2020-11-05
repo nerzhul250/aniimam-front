@@ -1,35 +1,5 @@
 const countries = [
-    "Colombia",
-    "Panama",
-    "Peru",
-    "Ecuador",
-    "Mexico",
-    "Argentina",
-    "Uruguay",
-    "Venezuela",
-    "Antigua and Barbuda", 
-    "Bahamas", 
-    "Barbados", 
-    "Belize", 
-    "Bolivia", 
-    "Brazil",
-    "Chile",
-    "Costa Rica",
-    "Cuba", 
-    "Dominica",
-    "El Salvador",
-    "Granada",
-    "Guatemala",
-    "Guyana",
-    "Honduras",
-    "Jamaica",
-    "Nicaragua",
-    "Paraguay",
-    "Dominican Republic",
-    "St. Lucia", 
-    "St. Kitts and Nevis", 
-    "St. Vincent and Grenadines",
-    "Trinidad and Tobago"
+    "Colombia"
 ];
 
 export default countries;

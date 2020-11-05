@@ -1,6 +1,6 @@
 import store from '../store/index'
 
-class ProductRepository{
+class ProductRepository {
     getUserPublishedProducts(){
         return store.dispatch("product/getUserPublishedProducts")
     }
