@@ -14,6 +14,9 @@ const actions = {
     },
     getProductCategories(){
         return api.request('/product-categories','get')
+    },
+    publishProduct(context,data){
+        return api.request('/ext/products/publish-product','post',data);
     }
 }
 

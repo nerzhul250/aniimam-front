@@ -81,6 +81,7 @@
                                 type="number"
                                 min="1"
                                 step="1"
+                                v-model="stock"
                                 :rules="stockRules"
                             ></v-text-field>
 
@@ -293,6 +294,7 @@
                  <v-btn
                     color="orange"
                     class="white--text"
+                    @click="add_product"
                 >
                     ¡Publicar producto!
                 </v-btn>
@@ -309,8 +311,6 @@ import colombianCities from './colombianCities'
 
 import ProductRepository from '../../repositories/product';
 import LocationRepository from '../../repositories/location';
-
-
 
 export default {
     components: {
@@ -379,6 +379,12 @@ export default {
                     this.user_locations=res.data
                     this.onboarding_location=0;
                 })
+            })
+        },
+        add_product(){
+            ProductRepository.publishProduct(this.title,this.price,this.description,this.stock,
+            this.productCategory,this.anime,this.location,this.productImages).then((res)=>{
+                console.log(res)
             })
         },
 
