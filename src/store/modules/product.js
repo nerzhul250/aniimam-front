@@ -2,10 +2,13 @@ import { Api } from '../../helpers/api'
 
 const api = new Api(Api.ROUTES().empty);
 const state = {
-    userPublishedProducts: []
+    userPublishedProducts: [],
+    allProducts:[]
 }
 
 const getters = {
+    getUserPublishedProducts: state => state.userPublishedProducts,
+    getAllProducts: state => state.allProducts
 }
 
 const actions = {
@@ -17,12 +20,18 @@ const actions = {
     },
     publishProduct(context,data){
         return api.request('/ext/products/publish-product','post',data);
+    },
+    getProductsWithPageAndSize(context,data){
+        return api.request('/products','get',data);
     }
 }
 
 const mutations = {
     setUserPublishedProducts(state,userPublishedProducts){
         state.userPublishedProducts=userPublishedProducts
+    },
+    appendNewProductsToAllProducts(state,newProducts){
+        state.allProducts= state.allProducts.concat(newProducts);
     }
 }
 

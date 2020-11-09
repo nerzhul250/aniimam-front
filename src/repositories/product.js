@@ -24,6 +24,14 @@ class ProductRepository {
         }
         return store.dispatch("product/publishProduct",data) 
     }
+
+    getProductsWithPageAndSize(page,size){
+        let data={
+            page:page,
+            size:size
+        }
+        return store.dispatch("product/getProductsWithPageAndSize",data)
+    }
 }
 
 export default new ProductRepository();
