@@ -32,6 +32,13 @@
           >mdi-account-check</v-icon>
           Hola {{username}}
         </v-btn>
+        <v-btn
+          class="black--text mr-5"
+          color="white"
+          @click="logout"
+        >
+          SALIR
+        </v-btn>
       </div>
       <div v-else>
         <v-btn
@@ -69,6 +76,12 @@ export default {
   data(){
     return{
 
+    }
+  },
+  methods:{
+    logout(){
+      this.$store.dispatch("auth/logout");
+      this.$router.push('/');
     }
   },
   computed:{

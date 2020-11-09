@@ -7,11 +7,11 @@
       <v-list-item class="mt-1">
         <v-list-item-content>
           <v-list-item-title class="title">
-            Mas que un gusto, <br> es un estilo de vida
+            Haz realidad <br> tu amor y tu hype 
+            <v-icon
+              color="red"
+            >mdi-heart</v-icon>
           </v-list-item-title>
-          <v-list-item-subtitle>
-            wink wink
-          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -22,32 +22,66 @@
         nav
       >
         <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          :to="item.link"
+          to="/"
         >
             <v-list-item-icon>
-                <v-icon :color="item.color">{{ item.icon }}</v-icon>
+                <v-icon color="yellow">mdi-star-four-points</v-icon>
             </v-list-item-icon>
-
             <v-list-item-content>
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
+                <v-list-item-title>¡Debes ver esto!</v-list-item-title>
             </v-list-item-content>
         </v-list-item>
+
+        <v-list-item
+          @click="showCategoriesOverlay"
+        >
+            <v-list-item-icon>
+                <v-icon color="primary">mdi-view-dashboard</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+                <v-list-item-title>Categorias</v-list-item-title>
+            </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item
+          @click="showAnimesOverlay"
+        >
+            <v-list-item-icon>
+                <v-icon color="orange">mdi-checkbox-blank-circle</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+                <v-list-item-title>Animes</v-list-item-title>
+            </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item
+          to="/form"
+        >
+            <v-list-item-icon>
+                <v-icon color="green">mdi-help-box</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+                <v-list-item-title>Acerca de Aniimam</v-list-item-title>
+            </v-list-item-content>
+        </v-list-item>
+
       </v-list>
     </v-navigation-drawer>
 </template>
 
 <script>
 export default {
-     data () {
+    data () {
       return {
-        items: [
-          { title: '¡Debes ver esto!', icon: 'mdi-star-four-points', link:'/',color:'yellow'},
-          { title: 'Categorias', icon: 'mdi-view-dashboard', link:'/', color:'blue'},
-          { title: 'Acerca de Aniimam', icon: 'mdi-help-box', link:'/form', color:'green'},
-        ],
         right: null,
+      }
+    },
+    methods:{
+      showCategoriesOverlay(){
+          console.log('works');
+      },
+      showAnimesOverlay(){
+          console.log('works2');
       }
     }
 }

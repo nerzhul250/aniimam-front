@@ -111,6 +111,7 @@
                             v-model="anime_request_query"
                             append-outer-icon="mdi-magnify"
                             @click:append-outer="query_anime"
+                            :loading="isLoadingJikan"
                         ></v-text-field>
                         <v-card class="px-5 pt-5" v-if="!!anime_request_results">
                             <v-window
@@ -295,11 +296,18 @@
                     color="orange"
                     class="white--text"
                     @click="add_product"
+                    :loading="isLoading"
                 >
                     ¡Publicar producto!
                 </v-btn>
             </div>
         </v-card-actions>
+        <v-snackbar
+            v-model="snackbar"
+            :timeout="timeout"
+        >
+            ¡Producto publicado exitosamente!
+        </v-snackbar>
     </v-card>
 </template>
 
@@ -319,6 +327,10 @@ export default {
     data(){
         return {
             valid:false,
+            snackbar:false,
+            timeout:2000,
+            isLoading:false,
+            isLoadingJikan:false,
             imageData:undefined,
             colombianCities:colombianCities,
             errors: {},
@@ -359,10 +371,12 @@ export default {
             this.productImages.splice(i,1);
         },
         query_anime(){
+            this.isLoadingJikan=true;
             jikanApi.get("/search/anime?q="+this.anime_request_query).then((res)=>{
                 this.onboarding=0
                 this.anime_request_results = res.data.results
                 this.animeId=''
+                this.isLoadingJikan=false
             })
         },
         select_anime(anime){
@@ -376,15 +390,21 @@ export default {
             LocationRepository.saveNewLocation(this.city,this.address).then((res1)=>{
                 console.log(res1)
                  LocationRepository.getUserLocations().then((res)=>{
-                    this.user_locations=res.data
+                    this.user_locations=res.data;
                     this.onboarding_location=0;
                 })
             })
         },
         add_product(){
+            this.isLoading=true;
             ProductRepository.publishProduct(this.title,this.price,this.description,this.stock,
             this.productCategory,this.anime,this.location,this.productImages).then((res)=>{
                 console.log(res)
+                this.snackbar=true;
+                setTimeout(()=>{
+                    this.isLoading=false;
+                    this.$router.push('/profile');
+                    },2000);
             })
         },
 

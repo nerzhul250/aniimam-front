@@ -4,7 +4,9 @@ import vuetify from './plugins/vuetify';
 import router from './router'
 import store from './store/index'
 import VCurrencyField from 'v-currency-field'
+import Vue2Filters from 'vue2-filters'
 import { VTextField } from 'vuetify/lib'  //Globally import VTextField
+
 
 Vue.config.productionTip = false
 
@@ -21,6 +23,17 @@ Vue.use(VCurrencyField, {
     valueAsInteger: false,
     allowNegative: true
 })
+
+Vue.use(Vue2Filters)
+
+router.beforeEach((to, from, next) => {
+  if(store.getters["auth/getUserToken"]==''){
+    if (to.name=='profile' || to.name=='create-product') {
+        return next({path:'/'});
+    }
+  }
+  return next();
+});
 
 new Vue({
   vuetify,

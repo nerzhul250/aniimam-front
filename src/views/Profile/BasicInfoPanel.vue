@@ -121,10 +121,10 @@ import AvatarPicker from './AvatarPicker'
                 }
             },
             otakuRating(){
-                return 50;
+                return this.$store.getters["auth/getUser"].otakuRating;
             },
             mercaderRating(){
-                return 25;
+                return this.$store.getters["auth/getUser"].mercaderRating;
             }
         },
         methods: {

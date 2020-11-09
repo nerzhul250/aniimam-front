@@ -5,7 +5,7 @@
             :key="i"
             class="d-flex align-center flex-column  ma-2"
             height="190"
-            width="180"
+            width="190"
             @mouseover="showByIndex = i"
             @mouseleave="showByIndex = null"
         >
@@ -18,6 +18,14 @@
                 class="mb-n2"
             ></v-img>
 
+
+            <v-expand-transition>
+                <div v-show="showByIndex!=i">
+                    <v-card-title class="mt-2">
+                        {{product.price | currency}}
+                    </v-card-title>
+                </div>
+            </v-expand-transition>
             <v-expand-transition>
                 <div v-show="showByIndex===i">
 
@@ -27,7 +35,7 @@
                         {{product.title}}
                     </v-card-title>
                     <v-card-subtitle>
-                        {{product.price}}
+                        {{product.price | currency}}
                     </v-card-subtitle>
                 </div>
             </v-expand-transition>
