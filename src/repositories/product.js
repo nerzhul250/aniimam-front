@@ -9,6 +9,10 @@ class ProductRepository {
         return store.dispatch("product/getProductCategories")
     }
 
+    getProductAnimes(){
+        return store.dispatch("product/getProductAnimes");
+    }
+
     publishProduct(title,price,description,stock,productCategory,anime,location,productImages){
         let data={
             title:title,
@@ -25,12 +29,38 @@ class ProductRepository {
         return store.dispatch("product/publishProduct",data) 
     }
 
-    getProductsWithPageAndSize(page,size){
-        let data={
-            page:page,
-            size:size
+    getProductsWithPageAndSizeAndCategoryAndAnime(page,size,category,anime){
+        let data='';
+
+        if(category.id==-1 && anime.id==-1){
+            data={
+                page:page,
+                size:size
+            }
+            return store.dispatch("product/getProductsWithPageAndSize",data)
+        }else if(category.id!=-1 && anime.id==-1){
+            data={
+                page:page,
+                size:size,
+                productCategory:category
+            }
+            return store.dispatch("product/getProductsWithPageAndSizeAndCategory",data)
+        }else if(category.id==-1 && anime.id!=-1){
+            data={
+                page:page,
+                size:size,
+                anime:anime
+            }
+            return store.dispatch("product/getProductsWithPageAndSizeAndAnime",data)
+        }else{
+            data={
+                page:page,
+                size:size,
+                anime:anime,
+                productCategory:category
+            }
+            return store.dispatch("product/getProductsWithPageAndSizeAndCategoryAndAnime",data)   
         }
-        return store.dispatch("product/getProductsWithPageAndSize",data)
     }
 }
 

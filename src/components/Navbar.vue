@@ -78,10 +78,28 @@ export default {
     },
     methods:{
       showCategoriesOverlay(){
-          console.log('works');
+          this.categoriesOverlay=true;
       },
       showAnimesOverlay(){
-          console.log('works2');
+          this.animeOverlay=true;
+      }
+    },
+    computed:{
+      animeOverlay:{
+          get(){
+              return this.$store.getters["product/isAnimeOverlay"];
+          },
+          set(value){
+              this.$store.commit("product/setAnimeOverlay",value);
+          }
+      },
+      categoriesOverlay:{
+          get(){
+              return this.$store.getters["product/isCategoriesOverlay"];
+          },
+          set(value){
+              this.$store.commit("product/setCategoriesOverlay",value);
+          }
       }
     }
 }
