@@ -1,6 +1,14 @@
 import store from '../store/index'
 
 class ProductRepository {
+
+    deleteProduct(product){
+        let data={
+            productId:product.id
+        }
+        return store.dispatch("product/deleteProduct",data)
+    }
+
     getUserPublishedProducts(){
         return store.dispatch("product/getUserPublishedProducts")
     }

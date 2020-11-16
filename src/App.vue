@@ -69,6 +69,6 @@ export default {
     /* Handle */
     ::-webkit-scrollbar-thumb {
         background: #FFA500;
-        border-radius: 10px;
+        border-radius: 7px;
     }
 </style>

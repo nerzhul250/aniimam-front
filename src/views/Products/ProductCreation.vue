@@ -21,12 +21,15 @@
                                 dark
                                 color="orange"
                                 @click="save" 
-                                :disabled="!valid"
+                                :disabled="!valid || productImages.length>=5"
                             >
                                 <v-icon>
                                     mdi-checkbox-marked-circle
                                 </v-icon>
                             </v-btn>
+                            <v-card-subtitle v-if="productImages.length>=5">
+                                Se ha alcanzado el limite de imagenes
+                            </v-card-subtitle>
                         </div>
                     </v-card>
                     <v-card class="d-flex flex-wrap pa-5 mt-5" v-if="productImages.length!=0">
@@ -53,25 +56,27 @@
             <v-row style="height:50%">
                 <v-col cols="6">
                     <v-card-title>
-                        ¡Publica!
+                        Datos basicos
                     </v-card-title>
                     <v-card class="d-flex flex-column mb-5 px-5 pt-5"> 
                         <v-text-field
+                            counter
                             label="Titulo del producto"
                             class="mr-3"
                             v-model="title"
+                            :rules="titleRules"
                         ></v-text-field>
                         <v-currency-field 
                             label="Precio" 
                             :error-messages="errors.price"
                             filled
                             v-model="price"/>
-                        <v-currency-field 
+                        <!-- <v-currency-field 
                             label="Por cada venta recibes" 
                             :error-messages="errors.price"
                             filled
                             disabled
-                            v-model="money_received"/>
+                            v-model="money_received"/> -->
                     </v-card>
                     <v-card-title>
                         Datos generales
@@ -93,6 +98,7 @@
                                 :items="product_categories"
                                 item-text="name"
                                 v-model="productCategory"
+                                :rules="categoryRules"
                                 return-object
                             ></v-autocomplete>
 
@@ -114,6 +120,7 @@
                             v-model="anime_request_query"
                             append-outer-icon="mdi-magnify"
                             @click:append-outer="query_anime"
+                            :rules="animeRules"
                             :loading="isLoadingJikan"
                         ></v-text-field>
                         <v-card class="px-5 pt-5" v-if="!!anime_request_results">
@@ -278,8 +285,10 @@
                         Descripción del producto
                     </v-card-title>
                     <v-textarea
+                        counter
                         solo
                         v-model="description"
+                        :rules="descriptionRules"
                     >
                     </v-textarea>
                 </v-col>
@@ -313,6 +322,17 @@
         >
             ¡Producto publicado exitosamente!
         </v-snackbar>
+        <v-alert
+            v-model="errorAlert"
+            border="right"
+            colored-border
+            type="error"
+            elevation="2"
+            dismissible
+            max-width="500"
+        >
+            Revisa los datos, ha habido un error
+        </v-alert>
     </v-card>
 </template>
 
@@ -333,6 +353,7 @@ export default {
         return {
             valid:false,
             snackbar:false,
+            errorAlert:false,
             timeout:2000,
             isLoading:false,
             isLoadingJikan:false,
@@ -361,6 +382,21 @@ export default {
             stockRules: [
                 s => !!s || 'Se debe de especificar un numero de unidades disponibles',
             ],
+            categoryRules: [
+                c => !!c || 'Se debe de especificar una categoria'
+            ],
+            animeRules: [
+                a => !!a || 'Se debe de especificar un anime relacionado al producto'
+            ],
+            descriptionRules: [
+                d => !!d || 'Se debe de especificar una descripcion para el producto',
+                d => d.length<=3000 || 'Maximo 3000 caracteres!'
+            ],
+            titleRules: [
+                t => !!t || 'Se debe de especificar un titulo para el producto',
+                t => t.length<=100 || 'Maximo 100 caracteres'
+            ]
+
         }
     },
     methods:{
@@ -401,18 +437,25 @@ export default {
             })
         },
         add_product(){
-            this.isLoading=true;
-            ProductRepository.publishProduct(this.title,this.price,this.description,this.stock,
-            this.productCategory,this.anime,this.location,this.productImages).then((res)=>{
-                console.log(res)
-                this.snackbar=true;
-                setTimeout(()=>{
+            if(this.productImages.length==0){
+                this.errorAlert=true;
+            }else{
+                this.isLoading=true;
+                ProductRepository.publishProduct(this.title,this.price,this.description,this.stock,
+                this.productCategory,this.anime,this.location,this.productImages).then((res)=>{
+                    console.log(res)
+                    this.snackbar=true;
+                    setTimeout(()=>{
+                        this.isLoading=false;
+                        this.$router.push('/profile');
+                        },2000);
+                }).catch((err)=>{
+                    console.log(err)
+                    this.errorAlert=true;
                     this.isLoading=false;
-                    this.$router.push('/profile');
-                    },2000);
-            })
+                })
+            }
         },
-
         switch_onboarding_location(){
             this.onboarding_location=1-this.onboarding_location
         },

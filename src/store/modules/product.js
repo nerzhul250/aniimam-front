@@ -55,6 +55,9 @@ const actions = {
             size:data.size
         }
         return api.request('ext/products-by-category-and-anime?categoryId='+data.productCategory.id+'&animeId='+data.anime.id,'get',newData);
+    },
+    deleteProduct(context,data){
+        return api.request('ext/delete-product?productId='+data.productId,'put');
     }
 }
 
@@ -79,6 +82,9 @@ const mutations = {
     },
     setProductDetails(state, newProductDetails){
         state.productDetails=newProductDetails
+    },
+    deleteProductFromUserPublishedProducts(state,index){
+        state.userPublishedProducts.splice(index,1);
     }
 }
 

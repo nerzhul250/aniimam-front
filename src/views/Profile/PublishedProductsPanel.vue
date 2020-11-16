@@ -38,20 +38,22 @@
             <v-card-actions>
                 <v-btn
                     icon
+                    @click="showProductDetails(product)"
                 >
                     <v-icon
                         color="primary"
                     >mdi-eye-outline</v-icon>
                 </v-btn>
-                <v-btn
+                <!-- <v-btn
                     icon
                 >
                     <v-icon
                         color="yellow"
                     >mdi-pencil</v-icon>
-                </v-btn>
+                </v-btn> -->
                 <v-btn
                     icon
+                    @click="deleteProduct(product,i)"
                 >
                     <v-icon
                         color="red"
@@ -68,6 +70,22 @@ import ProductRepository from '../../repositories/product'
 export default {
     data(){
         return { 
+        }
+    },
+    methods:{
+        showProductDetails(product){
+            this.$store.commit("product/setProductDetails",product)
+            this.$store.commit("product/setProductDetailsOverlay",true)
+        },
+        deleteProduct(product,i){
+            ProductRepository.deleteProduct(product).then((res)=>{
+                console.log(res)
+                alert("product deleted succesfully")
+                this.$store.commit('product/deleteProductFromUserPublishedProducts',i)
+            }).catch((err)=>{
+                console.log(err)
+                alert("There has been an error deleting your product")
+            })
         }
     },
     mounted(){

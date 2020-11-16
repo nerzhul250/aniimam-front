@@ -50,7 +50,7 @@
                 dismissible
                 max-width="500"
             >
-                Hubo un error actualizando sus datos
+                Hubo un error actualizando tus datos
             </v-alert>
         </div>
     </div>
