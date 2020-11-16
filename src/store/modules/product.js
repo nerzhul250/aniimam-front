@@ -6,13 +6,17 @@ const state = {
     allProducts:[],
     animeOverlay:false,
     categoriesOverlay:false,
+    productDetailsOverlay:false,
+    productDetails:''
 }
 
 const getters = {
     getUserPublishedProducts: state => state.userPublishedProducts,
     getAllProducts: state => state.allProducts,
     isAnimeOverlay: state => state.animeOverlay,
-    isCategoriesOverlay: state => state.categoriesOverlay
+    isCategoriesOverlay: state => state.categoriesOverlay,
+    isProductDetailsOverlay: state => state.productDetailsOverlay,
+    getProductDetails: state => state.productDetails
 }
 
 const actions = {
@@ -69,6 +73,12 @@ const mutations = {
     },
     setCategoriesOverlay(state, newCategoriesOverlay){
         state.categoriesOverlay = newCategoriesOverlay;
+    },
+    setProductDetailsOverlay(state, newProductDetailsOverlay){
+        state.productDetailsOverlay=newProductDetailsOverlay
+    },
+    setProductDetails(state, newProductDetails){
+        state.productDetails=newProductDetails
     }
 }
 

@@ -55,7 +55,7 @@
         </v-list-item>
 
         <v-list-item
-          to="/form"
+          to="/about"
         >
             <v-list-item-icon>
                 <v-icon color="green">mdi-help-box</v-icon>

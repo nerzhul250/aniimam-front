@@ -1,39 +1,19 @@
 <template>
     <v-card class="mx-10 pa-10">
         <v-container>
-            <v-row style="height:100%">
-                <v-col cols="6">
-                    <v-card-title>
-                        ¡Publica!
-                    </v-card-title>
-                    <v-card class="d-flex flex-column mb-5 px-5 pt-5"> 
-                        <v-text-field
-                            label="Titulo del producto"
-                            class="mr-3"
-                            v-model="title"
-                        ></v-text-field>
-                        <v-currency-field 
-                            label="Precio" 
-                            :error-messages="errors.price"
-                            filled
-                            v-model="price"/>
-                        <v-currency-field 
-                            label="Por cada venta recibes" 
-                            :error-messages="errors.price"
-                            filled
-                            disabled
-                            v-model="money_received"/>
-                    </v-card>
+            <v-row style="height:50%">
+                <v-col cols="12">
                     <v-card-title>
                         ¡Sube imagenes!
                     </v-card-title>
                     <v-card class="d-flex px-5 pt-5 justify-center">
                         <v-image-input
                             v-model="imageData"
-                            :image-quality="0.85"
                             clearable
-                            image-format="jpeg"
+                            image-format="png"
                             ref="vImageInput"
+                            imageHeight="500"
+                            imageWidth="500"
                         />
                         <div class="d-flex align-center justify-center">
                             <v-btn 
@@ -69,7 +49,30 @@
                         </v-card> 
                     </v-card>
                 </v-col>
+            </v-row>
+            <v-row style="height:50%">
                 <v-col cols="6">
+                    <v-card-title>
+                        ¡Publica!
+                    </v-card-title>
+                    <v-card class="d-flex flex-column mb-5 px-5 pt-5"> 
+                        <v-text-field
+                            label="Titulo del producto"
+                            class="mr-3"
+                            v-model="title"
+                        ></v-text-field>
+                        <v-currency-field 
+                            label="Precio" 
+                            :error-messages="errors.price"
+                            filled
+                            v-model="price"/>
+                        <v-currency-field 
+                            label="Por cada venta recibes" 
+                            :error-messages="errors.price"
+                            filled
+                            disabled
+                            v-model="money_received"/>
+                    </v-card>
                     <v-card-title>
                         Datos generales
                     </v-card-title>
@@ -168,6 +171,8 @@
                             </v-card-actions>
                         </v-card>
                     </v-card>
+                </v-col>
+                <v-col cols="6">
                     <v-card-title>
                         Datos de ubicación del producto
                     </v-card-title>

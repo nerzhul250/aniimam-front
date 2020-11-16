@@ -1,40 +1,40 @@
 <template>
-    <div>
-        <v-card>
-            <v-card-title>
-                {{username}}
-            </v-card-title>
-            <v-card-text
-                class="black--text"
-            >
-                <v-flex class="mb-4 d-flex align-center">
-                    <v-avatar size="96" class="mr-4"  v-if="imageUrl=='' || imageUrl==null">
-                        <img src="../../assets/aniimamLogo.png" alt="Avatar">
-                    </v-avatar>
-                    <v-avatar size="96" class="mr-4" v-else>
-                        <img :src="imageUrl" alt="Avatar">
-                    </v-avatar>
-                    <v-flex class="d-flex flex-column">
-                        <v-progress-linear
-                            :value="otakuRating"
-                            color="orange"
-                            height="25"
-                            rounded
-                        ><strong>Otaku Rating</strong></v-progress-linear>
-                        <v-progress-linear
-                            :value="mercaderRating"
-                            color="green"
-                            height="25"
-                            rounded
-                            class="mt-2"
-                        ><strong>Mercader Rating</strong>
-                        </v-progress-linear>
-                    </v-flex>
+    <v-card
+        class="mx-5"
+    >
+        <v-card-title>
+            {{username}}
+        </v-card-title>
+        <v-card-text
+            class="black--text"
+        >
+            <v-flex class="mb-4 d-flex align-center">
+                <v-avatar size="96" class="mr-4"  v-if="imageUrl=='' || imageUrl==null">
+                    <img src="../../assets/aniimamLogo.png" alt="Avatar">
+                </v-avatar>
+                <v-avatar size="96" class="mr-4" v-else>
+                    <img :src="imageUrl" alt="Avatar">
+                </v-avatar>
+                <v-flex class="d-flex flex-column">
+                    <v-progress-linear
+                        :value="otakuRating"
+                        color="orange"
+                        height="25"
+                        rounded
+                    ><strong>Otaku Rating</strong></v-progress-linear>
+                    <v-progress-linear
+                        :value="mercaderRating"
+                        color="green"
+                        height="25"
+                        rounded
+                        class="mt-2"
+                    ><strong>Mercader Rating</strong>
+                    </v-progress-linear>
                 </v-flex>
-                {{profileDescription}}
-            </v-card-text>
-        </v-card>
-    </div>    
+            </v-flex>
+            {{profileDescription}}
+        </v-card-text>
+    </v-card>
 </template>
 
 <script>

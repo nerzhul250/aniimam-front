@@ -3,10 +3,11 @@
         <v-card 
             v-for="(product,i) in allProducts"
             :key="i"
-            class="d-flex align-center flex-column  ma-2 expandable-card"
+            class="d-flex align-center flex-column ma-2 expandable-card"
             width="190"
             @mouseover="showByIndex = i"
             @mouseleave="showByIndex = null"
+            @click="showProductDetails(product)"
             height='100%'
         >
 
@@ -28,10 +29,11 @@
                 <v-card-title
                     class="mb-n6"
                 >
-                    {{product.title}}
+
+                    {{product.price | currency}}
                 </v-card-title>
                 <v-card-subtitle>
-                    {{product.price | currency}}
+                    {{product.title}}
                 </v-card-subtitle>
             </div>
         </v-card>
@@ -188,6 +190,10 @@ export default {
                 this.$store.commit("product/setNewProductsToAllProducts",res.data);
                 this.page=this.page+1;
             })
+        },
+        showProductDetails(product){
+            this.$store.commit("product/setProductDetails",product)
+            this.$store.commit("product/setProductDetailsOverlay",true)
         }
     },
     computed:{
@@ -245,5 +251,9 @@ export default {
 .expandable-card:hover{
     transform: translate3D(0,-1px,0) scale(1.04);
     cursor: pointer;
+}
+
+.shortspacing{
+    letter-spacing: 0.000075em !important
 }
 </style>

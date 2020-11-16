@@ -9,18 +9,25 @@
         </v-col>
       </v-row>
     </v-main>
+    <v-overlay
+      :value="productDetailsOverlay"
+    >
+      <ProductDetails/>
+    </v-overlay>
   </v-app>
 </template>
 
 <script>
 import Appbar from './components/Appbar';
 import Navbar from './components/Navbar';
+import ProductDetails from './views/Products/ProductDetails'
 
 export default {
   name: 'App',
   components: {
     Appbar,
-    Navbar
+    Navbar,
+    ProductDetails
   },
   data: () => ({
     outOfAppExceptionRoutes: [
@@ -31,9 +38,20 @@ export default {
             'registration-confirmation',
             'profile',
             'public-profile',
-            'create-product'
+            'create-product',
+            'about'
     ],
   }),
+  computed:{
+    productDetailsOverlay:{
+          get(){
+              return this.$store.getters["product/isProductDetailsOverlay"];
+          },
+          set(value){
+              this.$store.commit("product/setProductDetailsOverlay",value);
+          }
+      }
+  }
 };
 </script>
 

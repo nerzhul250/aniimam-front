@@ -12,6 +12,8 @@ import Login from './views/Login/Login'
 import Profile from './views/Profile/Profile'
 import PublicProfile from './views/Profile/PublicProfile'
 import ProductCreation from './views/Products/ProductCreation'
+import About from './components/About'
+
 
 export default new Router({
     routes:[
@@ -62,5 +64,10 @@ export default new Router({
             name: 'create-product',
             component: ProductCreation
         },
+        {
+            path: '/about',
+            name: 'about',
+            component: About
+        }
     ]
 })
