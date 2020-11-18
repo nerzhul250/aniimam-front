@@ -17,7 +17,7 @@
                                 <img src="../../assets/aniimamLogo.png" alt="Avatar">
                             </v-avatar>
                             <v-avatar size="96" class="mr-4" v-else>
-                                <img :src="imageUrl" alt="Avatar">
+                                <img :src="'https://aniimam-user-avatars.s3.amazonaws.com'+imageUrl" alt="Avatar">
                             </v-avatar>
                             <v-flex class="d-flex flex-column">
                                 <v-progress-linear

@@ -6,6 +6,7 @@ import store from './store/index'
 import VCurrencyField from 'v-currency-field'
 import Vue2Filters from 'vue2-filters'
 import { VTextField } from 'vuetify/lib'  //Globally import VTextField
+import infiniteScroll from 'vue-infinite-scroll'
 
 
 Vue.config.productionTip = false
@@ -23,8 +24,8 @@ Vue.use(VCurrencyField, {
     valueAsInteger: false,
     allowNegative: true
 })
-
 Vue.use(Vue2Filters)
+Vue.use(infiniteScroll)
 
 router.beforeEach((to, from, next) => {
   if(store.getters["auth/getUserToken"]==''){

@@ -2,7 +2,7 @@
   <v-card 
     v-click-outside="onClickOutside" 
     light
-    class="overflow-y: scroll"
+    class="overflow-y: scroll px-5"
     max-width="500"
     width="500"
     max-height="600"
@@ -45,7 +45,7 @@
             @click="goToProfile(product.user.login)" 
             v-if="product.user.imageUrl=='' || product.user.imageUrl==null"
         >
-        <img src="../../assets/aniimamLogo.png" alt="Avatar">
+            <img src="../../assets/aniimamLogo.png" alt="Avatar">
         </v-avatar>
         <v-avatar 
             size="50" 
@@ -53,7 +53,7 @@
             @click="goToProfile(product.user.login)" 
             v-else
         >
-            <img :src="product.user.imageUrl" alt="Avatar">
+            <img :src="'https://aniimam-user-avatars.s3.amazonaws.com'+product.user.imageUrl" alt="Avatar">
         </v-avatar>
     </div>
 

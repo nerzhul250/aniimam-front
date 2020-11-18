@@ -45,6 +45,9 @@ const actions = {
   },
   getUserPublicData(context,data){
     return api.request(`/ext/users?username=${data.username}`,'get')
+  },
+  updateUserAvatar(context,data){
+    return api.request('/ext/update-user-avatar','post',data.form,data.config);
   }
 }
 
@@ -64,6 +67,9 @@ const mutations = {
     state.user.profileDescription=user.profileDescription
     state.user.phone=user.phone
     state.user.country=user.country
+  },
+  setUserAvatarUrl(state,newAvatarUrl){
+    state.user.imageUrl=newAvatarUrl;
   },
   setFirstName(state,firstName){
     state.user.firstName=firstName

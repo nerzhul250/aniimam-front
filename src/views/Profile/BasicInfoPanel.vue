@@ -7,32 +7,20 @@
                 </v-card-title>
                 <v-card-text>
                     <v-flex class="mb-4 d-flex align-center">
-                        <v-badge
-                            overlap
-                            bottom
-                            color="tranparent"
-                            offset-x="50"
-                            offset-y="15"
-                        >
-                            <v-avatar size="96" class="mr-4"  v-if="avatar=='' || avatar==null">
-                                <img src="../../assets/aniimamLogo.png" alt="Avatar">
-                            </v-avatar>
-                            <v-avatar size="96" class="mr-4" v-else>
-                                <img :src="avatar" alt="Avatar">
-                            </v-avatar>
-                            <v-btn 
-                                slot="badge"
-                                fab
-                                dark
-                                color="orange"
-                                small
-                                @click="openAvatarPicker" 
-                            >
-                                <v-icon>
-                                    mdi-image-edit
-                                </v-icon>
-                            </v-btn>
-                        </v-badge>
+                        <div class="mr-3">
+                            <v-avatar-uploader 
+                                url="../../assets/aniimamLogo.png"
+                                :request="request"
+                                :avatar="avatarConfigObject"
+                                v-if="avatar=='' || avatar==null"
+                            />
+                            <v-avatar-uploader
+                                :url="'https://aniimam-user-avatars.s3.amazonaws.com'+avatar"
+                                :request="request"
+                                :avatar="avatarConfigObject"
+                                v-else
+                            />
+                        </div>
                         <v-flex class="d-flex flex-column">
                             <v-progress-linear
                                 :value="otakuRating"
@@ -65,21 +53,26 @@
                 </v-card-text>
             </v-card>
         </v-layout>
-        <AvatarPicker
-            v-model="showAvatarPicker"
-            :current-avatar="avatar"
-            @selected="selectAvatar"/>
     </v-container>
 </template>
 
 <script>
-import AvatarPicker from './AvatarPicker'
+import UserRepository from '../../repositories/auth'
+import VAvatarUploader from 'vuetify-avatar-uploader'
+import Vue from 'vue';
+import Vuetify from 'vuetify';
+
+Vue.use(Vuetify);
+
     export default {
-        components: { AvatarPicker },
+        components: {VAvatarUploader},
         data () {
             return {
                 loading: false,
-                showAvatarPicker: false
+                showAvatarPicker: false,
+                avatarConfigObject:{
+                    size:96
+                }
             }
         },
         computed:{
@@ -134,8 +127,11 @@ import AvatarPicker from './AvatarPicker'
             selectAvatar (avatar) {
                 this.avatar = avatar.path
             },
-            save(){
-
+            // Responsible for performing the upload request to your API
+            request (form, config) {
+                UserRepository.updateUserAvatar(form,config).then((res)=>{
+                    this.$store.commit("auth/setUserAvatarUrl",res.data);
+                })
             }
         }
     }

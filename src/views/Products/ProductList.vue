@@ -1,42 +1,48 @@
 <template>
-    <v-container class="d-flex flex-wrap">
-        <v-card 
-            v-for="(product,i) in allProducts"
-            :key="i"
-            class="d-flex align-center flex-column ma-2 expandable-card"
-            width="190"
-            @mouseover="showByIndex = i"
-            @mouseleave="showByIndex = null"
-            @click="showProductDetails(product)"
-            height='100%'
+    <v-container>
+        <div
+            class="d-flex flex-wrap"
+            v-infinite-scroll="loadMore" 
+            infinite-scroll-disabled="busy"
         >
+            <v-card 
+                v-for="(product,i) in allProducts"
+                :key="i"
+                class="d-flex align-center flex-column ma-2 expandable-card"
+                width="190"
+                @mouseover="showByIndex = i"
+                @mouseleave="showByIndex = null"
+                @click="showProductDetails(product)"
+                height='100%'
+            >
 
-            <v-img
-                :src="'https://aniimam-product-images.s3.amazonaws.com'+product.productImages[0].imageUrl"
-                max-height="130"
-                style="width: 100%; height: 100%;"
-                v-if="!!product.productImages"
-                class="mb-n2"
-            ></v-img>
+                <v-img
+                    :src="'https://aniimam-product-images.s3.amazonaws.com'+product.productImages[0].imageUrl"
+                    max-height="130"
+                    style="width: 100%; height: 100%;"
+                    v-if="!!product.productImages"
+                    class="mb-n2"
+                ></v-img>
 
 
-            <div v-show="showByIndex!=i" style="height:100%">
-                <v-card-title class="mt-2">
-                    {{product.price | currency}}
-                </v-card-title>
-            </div>
-            <div v-show="showByIndex===i" style="height:100%">
-                <v-card-title
-                    class="mb-n6"
-                >
+                <div v-show="showByIndex!=i" style="height:100%">
+                    <v-card-title class="mt-2">
+                        {{product.price | currency}}
+                    </v-card-title>
+                </div>
+                <div v-show="showByIndex===i" style="height:100%">
+                    <v-card-title
+                        class="mb-n6"
+                    >
 
-                    {{product.price | currency}}
-                </v-card-title>
-                <v-card-subtitle>
-                    {{product.title}}
-                </v-card-subtitle>
-            </div>
-        </v-card>
+                        {{product.price | currency}}
+                    </v-card-title>
+                    <v-card-subtitle>
+                        {{product.title}}
+                    </v-card-subtitle>
+                </div>
+            </v-card>
+        </div>
         <v-overlay
           :absolute="absolute"
           :value="animeOverlay"
@@ -90,12 +96,10 @@
                 </v-card-actions>
             </v-card>
         </v-overlay>
-
         <v-overlay
           :absolute="absolute"
           :value="categoriesOverlay"
         >
-          
             <v-card 
                 class="pa-5"
                 width="500"
@@ -158,7 +162,10 @@ export default {
         return {
             showByIndex:null,
             absolute:true,
-            page:0,
+            busy:false,
+            pageNumber:0,
+            pageSize:20,
+            EndOfPagesReached:false,
             productCategories:[],
             selectedCategory:{
                 id:-1,
@@ -177,23 +184,38 @@ export default {
     methods:{
         selectCategory(item){
             this.selectedCategory=item
-            this.page=0;
-            ProductRepository.getProductsWithPageAndSizeAndCategoryAndAnime(this.page,20,this.selectedCategory,this.selectedAnime).then((res)=>{
+            this.pageNumber=0;
+            this.EndOfPagesReached=false;
+            ProductRepository.getProductsWithPageAndSizeAndCategoryAndAnime(this.pageNumber,this.pageSize,this.selectedCategory,this.selectedAnime).then((res)=>{
                 this.$store.commit("product/setNewProductsToAllProducts",res.data);
-                this.page=this.page+1;
+                this.pageNumber=this.pageNumber+1;
             })   
         },
         selectAnime(item){
             this.selectedAnime=item
-            this.page=0;
-            ProductRepository.getProductsWithPageAndSizeAndCategoryAndAnime(this.page,20,this.selectedCategory,this.selectedAnime).then((res)=>{
+            this.pageNumber=0;
+            this.EndOfPagesReached=false;
+            ProductRepository.getProductsWithPageAndSizeAndCategoryAndAnime(this.pageNumber,this.pageSize,this.selectedCategory,this.selectedAnime).then((res)=>{
                 this.$store.commit("product/setNewProductsToAllProducts",res.data);
-                this.page=this.page+1;
+                this.pageNumber=this.pageNumber+1;
             })
         },
         showProductDetails(product){
             this.$store.commit("product/setProductDetails",product)
             this.$store.commit("product/setProductDetailsOverlay",true)
+        },
+        loadMore(){
+            if(!this.EndOfPagesReached){
+                this.busy = true;
+                ProductRepository.getProductsWithPageAndSizeAndCategoryAndAnime(this.pageNumber,this.pageSize,this.selectedCategory,this.selectedAnime).then((res)=>{
+                    this.$store.commit("product/appendNewProductsToAllProducts",res.data);
+                    if(res.data.length==0){
+                        this.EndOfPagesReached=true;
+                    }
+                    this.pageNumber=this.pageNumber+1;
+                    this.busy = false;
+                })
+            }
         }
     },
     computed:{
@@ -218,12 +240,6 @@ export default {
         }
     },
     mounted(){
-        if(this.$store.getters["product/getAllProducts"].length==0){
-            ProductRepository.getProductsWithPageAndSizeAndCategoryAndAnime(this.page,20,this.selectedCategory,this.selectedAnime).then((res)=>{
-                this.$store.commit("product/setNewProductsToAllProducts",res.data);
-                this.page=this.page+1;
-            })
-        }
         ProductRepository.getProductCategories().then((res)=>{
             this.productCategories.push({
                 id:-1,

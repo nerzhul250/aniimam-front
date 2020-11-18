@@ -6,7 +6,6 @@
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
                 <v-toolbar-title>Selecciona un avatar</v-toolbar-title>
-                <v-spacer></v-spacer>
             </v-toolbar>
             <v-layout row wrap v-if="avatars">
                 <v-flex
@@ -27,6 +26,9 @@
                     </v-card>
                 </v-flex>
             </v-layout>
+            <v-toolbar dark color="primary">
+                <v-toolbar-title>O puedes cargar tu propio avatar</v-toolbar-title>
+            </v-toolbar>
         </v-card>
     </v-dialog>
 </template>

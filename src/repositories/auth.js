@@ -2,7 +2,6 @@ import store from '../store/index'
 var md5 = require("md5")
 
 class AuthRepository{
-
     registerUser(login,firstName,lastName,email,password){
         let data = {
             login:login,
@@ -59,6 +58,14 @@ class AuthRepository{
             username:username
         }
         return store.dispatch("auth/getUserPublicData",data);
+    }
+
+    updateUserAvatar(form,config){
+        let data={
+            form:form,
+            config:config
+        }
+        return store.dispatch("auth/updateUserAvatar",data);
     }
 }
 

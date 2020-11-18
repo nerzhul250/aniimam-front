@@ -33,28 +33,16 @@ const actions = {
         return api.request('/ext/products/publish-product','post',data);
     },
     getProductsWithPageAndSize(context,data){
-        return api.request('/products','get',data);
+        return api.request('/products?page='+data.page+'&size='+data.size,'get',data);
     },
     getProductsWithPageAndSizeAndCategory(context,data){
-        let newData={
-            page:data.page,
-            size:data.size
-        }
-        return api.request('/ext/products-by-category?categoryId='+data.productCategory.id,'get',newData);
+        return api.request('/ext/products-by-category?categoryId='+data.productCategory.id+'&page='+data.page+'&size='+data.size,'get');
     },
     getProductsWithPageAndSizeAndAnime(context,data){
-        let newData = {
-            page:data.page,
-            size:data.size
-        }
-        return api.request('/ext/products-by-anime?animeId='+data.anime.id,'get',newData);
+        return api.request('/ext/products-by-anime?animeId='+data.anime.id+'&page='+data.page+'&size='+data.size,'get');
     },
     getProductsWithPageAndSizeAndCategoryAndAnime(context,data){
-        let newData = {
-            page:data.page,
-            size:data.size
-        }
-        return api.request('ext/products-by-category-and-anime?categoryId='+data.productCategory.id+'&animeId='+data.anime.id,'get',newData);
+        return api.request('ext/products-by-category-and-anime?categoryId='+data.productCategory.id+'&animeId='+data.anime.id+'&page='+data.page+'&size='+data.size,'get');
     },
     deleteProduct(context,data){
         return api.request('ext/delete-product?productId='+data.productId,'put');
