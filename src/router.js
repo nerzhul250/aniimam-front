@@ -16,6 +16,7 @@ import About from './components/About'
 
 
 export default new Router({
+    mode: 'history',
     routes:[
         {
             path: '/',
