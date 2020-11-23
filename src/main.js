@@ -7,13 +7,16 @@ import VCurrencyField from 'v-currency-field'
 import Vue2Filters from 'vue2-filters'
 import { VTextField } from 'vuetify/lib'  //Globally import VTextField
 import infiniteScroll from 'vue-infinite-scroll'
-
+import VueGtag from "vue-gtag";
 
 Vue.config.productionTip = false
 
 
 Vue.component('v-text-field', VTextField)
 
+Vue.use(VueGtag, {
+  config: {id: "G-W617LBFQC7"}
+}, router);
 Vue.use(VCurrencyField, { 
 	locale: 'pt-BR',
 	decimalLength: 2,
@@ -26,6 +29,7 @@ Vue.use(VCurrencyField, {
 })
 Vue.use(Vue2Filters)
 Vue.use(infiniteScroll)
+
 
 router.beforeEach((to, from, next) => {
   if(store.getters["auth/getUserToken"]==''){
