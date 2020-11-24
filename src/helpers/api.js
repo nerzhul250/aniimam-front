@@ -1,15 +1,15 @@
 import Axios from 'axios'
 import authHeader from './authHeader';
  
-const PROD_URL = 'https://api.aniimam.com/api'; 
-/** 
- *const DEV_URL = 'http://localhost:8080/api'; 
-*/
+// const PROD_URL = 'https://api.aniimam.com/api'; 
+
+const DEV_URL = 'http://localhost:8080/api'; 
+
 
 const axios = Axios.create({
-    baseURL: PROD_URL,
-    timeout: 60 * 1000, // Timeout
-    withCredentials: true, // Check cross-site Access-Control
+    baseURL: DEV_URL,
+    //timeout: 60 * 1000, // Timeout
+    //withCredentials: true, // Check cross-site Access-Control
   });
   
 export default axios

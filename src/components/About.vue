@@ -1,39 +1,39 @@
 <template>
     <v-container fill-height fluid>
-    <v-row align="center"
-        justify="center">
-        <v-card
-            flat
-            tile
-            class="orange lighten-1 white--text text-center"
-            style="width:100%"
-        >
-            <v-card-text>
-                <v-btn
-                v-for="icon in icons"
-                :key="icon"
-                class="mx-4 white--text"
-                icon
-                >
-                <v-icon size="24px">
-                    {{ icon }}
-                </v-icon>
-                </v-btn>
-            </v-card-text>
+        <v-row align="center"
+            justify="center">
+            <v-card
+                flat
+                tile
+                class="orange lighten-1 white--text text-center"
+                style="width:100%"
+            >
+                <v-card-text>
+                    <v-btn
+                    v-for="icon in icons"
+                    :key="icon"
+                    class="mx-4 white--text"
+                    icon
+                    >
+                    <v-icon size="24px">
+                        {{ icon }}
+                    </v-icon>
+                    </v-btn>
+                </v-card-text>
 
-            <v-card-text class="white--text pt-0">
-                Aniimam tiene como objetivo conectar a compradores y vendedores
-                de mercancia anime <br>
-                facilitando su descubrimiento y conocimiento
-            </v-card-text>
+                <v-card-text class="white--text pt-0">
+                    Aniimam tiene como objetivo conectar a compradores y vendedores
+                    de mercancia anime <br>
+                    facilitando su descubrimiento y conocimiento
+                </v-card-text>
 
-            <v-divider></v-divider>
+                <v-divider></v-divider>
 
-            <v-card-text class="white--text">
-                {{ new Date().getFullYear() }} — <strong>Aniimam</strong>
-            </v-card-text>
-        </v-card>
-    </v-row>
+                <v-card-text class="white--text">
+                    {{ new Date().getFullYear() }} — <strong>Aniimam</strong>
+                </v-card-text>
+            </v-card>
+        </v-row>
     </v-container>
 </template>
 

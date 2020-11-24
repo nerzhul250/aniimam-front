@@ -1,13 +1,32 @@
 <template>
-    <h1>Tu email ha sido confirmado! hurra!</h1>    
+    <v-container fill-height fluid>
+        <v-row align="center"
+            justify="center">
+            <v-card
+                flat
+                tile
+                class="orange lighten-1 white--text text-center"
+                style="width:100%"
+            >
+
+                <v-card-text class="white--text pt-5">
+                    Correo electronico confirmado, ya puedes empezar a realizar publicaciones
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-text class="white--text">
+                    {{ new Date().getFullYear() }} — <strong>Aniimam</strong>
+                </v-card-text>
+            </v-card>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
-export default {
-    
-}
+ export default {
+  }
 </script>
 
-<style scoped>
-
+<style>
 </style>
