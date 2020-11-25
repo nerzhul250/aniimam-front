@@ -47,7 +47,7 @@ const actions = {
     return api.request(`/ext/users?username=${data.username}`,'get')
   },
   updateUserAvatar(context,data){
-    return api.request('/ext/update-user-avatar','post',data.form,data.config);
+    return api.request('/ext/update-user-avatar','post',data.form,encodeURI(data.config));
   }
 }
 

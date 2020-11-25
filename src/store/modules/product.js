@@ -7,7 +7,9 @@ const state = {
     animeOverlay:false,
     categoriesOverlay:false,
     productDetailsOverlay:false,
-    productDetails:''
+    productDetails:'',
+    currentPageNumber:0,
+    endOfPagesReached:false,
 }
 
 const getters = {
@@ -16,7 +18,9 @@ const getters = {
     isAnimeOverlay: state => state.animeOverlay,
     isCategoriesOverlay: state => state.categoriesOverlay,
     isProductDetailsOverlay: state => state.productDetailsOverlay,
-    getProductDetails: state => state.productDetails
+    getProductDetails: state => state.productDetails,
+    isEndOfPagesReached: state => state.endOfPagesReached,
+    getCurrentPageNumber: state => state.currentPageNumber
 }
 
 const actions = {
@@ -73,6 +77,12 @@ const mutations = {
     },
     deleteProductFromUserPublishedProducts(state,index){
         state.userPublishedProducts.splice(index,1);
+    },
+    setCurrentPageNumber(state, newPage){
+        state.currentPageNumber=newPage
+    },
+    setEndOfPagesReached(state, reached){
+        state.endOfPagesReached=reached
     }
 }
 

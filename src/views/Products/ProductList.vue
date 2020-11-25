@@ -163,9 +163,7 @@ export default {
             showByIndex:null,
             absolute:true,
             busy:false,
-            pageNumber:0,
             pageSize:20,
-            EndOfPagesReached:false,
             productCategories:[],
             selectedCategory:{
                 id:-1,
@@ -236,6 +234,22 @@ export default {
             },
             set(value){
                 this.$store.commit("product/setCategoriesOverlay",value);
+            }
+        },
+        pageNumber:{
+            get(){
+                return this.$store.getters["product/getCurrentPageNumber"];
+            },
+            set(value){
+                this.$store.commit("product/setCurrentPageNumber",value);
+            }
+        },
+        EndOfPagesReached:{
+            get(){
+                return this.$store.getters["product/isEndOfPagesReached"];
+            },
+            set(value){
+                this.$store.commit("product/setEndOfPagesReached",value);
             }
         }
     },

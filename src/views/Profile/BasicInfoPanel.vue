@@ -9,7 +9,7 @@
                     <v-flex class="mb-4 d-flex align-center">
                         <div class="mr-3">
                             <v-avatar-uploader 
-                                url="../../assets/aniimamLogo.png"
+                                url="https://aniimam-user-avatars.s3.amazonaws.com/aniimamLogo.png"
                                 :request="request"
                                 :avatar="avatarConfigObject"
                                 v-if="avatar=='' || avatar==null"
