@@ -10,13 +10,15 @@
             >
                 <v-card-text>
                     <v-btn
-                    v-for="icon in icons"
-                    :key="icon"
-                    class="mx-4 white--text"
-                    icon
+                        v-for="icon in icons"
+                        :key="icon.image"
+                        :link="true"
+                        :href="icon.link"
+                        class="mx-4 white--text"
+                        icon
                     >
                     <v-icon size="24px">
-                        {{ icon }}
+                        {{ icon.image }}
                     </v-icon>
                     </v-btn>
                 </v-card-text>
@@ -41,10 +43,7 @@
  export default {
     data: () => ({
       icons: [
-        //'mdi-facebook',
-        //'mdi-twitter',
-        //'mdi-linkedin',
-        'mdi-instagram',
+          {image:'mdi-instagram', link:'https://www.instagram.com/aniimam_com/'}
       ],
     }),
   }

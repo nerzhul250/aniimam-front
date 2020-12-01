@@ -199,7 +199,7 @@
                                     :items="user_locations"
                                     item-height="70"
                                     height="100"
-                                    v-if="!!user_locations"
+                                    v-if="user_locations!=''"
                                 >
                                     <template v-slot:default="{ item }">
                                         <v-list-item>
@@ -234,8 +234,8 @@
                                         <v-divider></v-divider>
                                     </template>
                                 </v-virtual-scroll>
-                                <v-card-title v-else>
-                                    No tienes direcciones actualmente registradas.
+                                <v-card-title v-if="user_locations==''">
+                                    No tienes direcciones actualmente registradas.<br>
                                     Dale click abajito para agregar una nueva direccion 
                                 </v-card-title>
                             </v-window-item>
@@ -248,12 +248,11 @@
                                     v-model="address"
                                 >
                                 </v-text-field>
-                                <v-select
+                                <v-autocomplete
                                     :items="colombianCities"
                                     v-model="city"
                                     return-object
-                                >
-                                </v-select>
+                                ></v-autocomplete>
                             </v-window-item>
                         </v-window>
                         <v-card-actions class="d-flex justify-center">
@@ -331,7 +330,7 @@
             dismissible
             max-width="500"
         >
-            Revisa los datos, ha habido un error
+            {{msgError}}
         </v-alert>
     </v-card>
 </template>
@@ -354,6 +353,7 @@ export default {
             valid:false,
             snackbar:false,
             errorAlert:false,
+            msgError:'',
             timeout:2000,
             isLoading:false,
             isLoadingJikan:false,
@@ -439,6 +439,28 @@ export default {
         add_product(){
             if(this.productImages.length==0){
                 this.errorAlert=true;
+                this.msgError='Asegurate de subir como minimo una imagen para el producto';
+            }else if(this.title==''){
+                this.errorAlert = true;
+                this.msgError = 'Debes de ponerle un titulo a tu producto';
+            }else if(this.price==0){
+                this.errorAlert = true;
+                this.msgError = 'Tu producto no puede tener un precio de cero';
+            }else if(this.description==''){
+                this.errorAlert = true;
+                this.msgError = 'Tienes que agregarle una descripción a tu producto';
+            }else if(this.stock==0){
+                this.errorAlert = true;
+                this.msgError = 'Debes de especificar un numero valido de unidades disponibles';
+            }else if(this.productCategory==''){
+                this.errorAlert = true;
+                this.msgError = 'Debes de especificar una categoria para el producto';
+            }else if(this.anime==''){
+                this.errorAlert = true;
+                this.msgError = 'Debes de especificar un anime relacionado al producto';
+            }else if(this.location==''){
+                this.errorAlert = true;
+                this.msgError = '¿Donde se ubica tu producto?'
             }else{
                 this.isLoading=true;
                 ProductRepository.publishProduct(this.title,this.price,this.description,this.stock,
@@ -452,6 +474,7 @@ export default {
                 }).catch((err)=>{
                     console.log(err)
                     this.errorAlert=true;
+                    this.msgError='Ha habido un error en el servidor, ¡avisanos!'
                     this.isLoading=false;
                 })
             }

@@ -25,10 +25,12 @@
           class="black--text mr-5"
           color="white"
           to="/profile"
+          :x-small="this.$vuetify.breakpoint.name=='xs'"
         >
           <v-icon
             color="orange"
             class="mr-2"
+            :x-small="this.$vuetify.breakpoint.name=='xs'"
           >mdi-account-check</v-icon>
           Hola {{username}}
         </v-btn>
@@ -36,8 +38,9 @@
           class="black--text mr-5"
           color="white"
           @click="logout"
+          :x-small="this.$vuetify.breakpoint.name=='xs'"
         >
-          SALIR
+          Salir
         </v-btn>
       </div>
       <div v-else>
@@ -45,10 +48,12 @@
           class="black--text mr-5"
           color="white"
           to="/registration/basic-info"
+          :x-small="this.$vuetify.breakpoint.name=='xs'"
         >
           <v-icon
             color="orange"
             class="mr-2"
+            :x-small="this.$vuetify.breakpoint.name=='xs'"
           >mdi-account-plus</v-icon>
           ¡Registrate!
         </v-btn>
@@ -57,10 +62,12 @@
           class="black--text mr-5"
           color="white"
           to="/login"
+          :x-small="this.$vuetify.breakpoint.name=='xs'"
         >
           <v-icon
             color="orange"
             class="mr-2"
+            :x-small="this.$vuetify.breakpoint.name=='xs'"
           >mdi-account-key</v-icon>
           ¡Ingresa!
         </v-btn>

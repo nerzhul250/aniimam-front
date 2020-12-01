@@ -46,16 +46,6 @@
                         <v-toolbar-title>
                             Publicaciones
                         </v-toolbar-title>
-                        <v-spacer>
-                        </v-spacer>
-                        <v-btn
-                            to="/create-product"
-                        >
-                            <v-icon
-                                color="orange"
-                            >mdi-plus</v-icon>
-                            ¡Vende!
-                        </v-btn>
                     </v-app-bar>
                     <v-card 
                         v-for="(product,i) in userPublishedProducts"

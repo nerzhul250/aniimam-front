@@ -37,16 +37,16 @@ const actions = {
         return api.request('/ext/products/publish-product','post',data);
     },
     getProductsWithPageAndSize(context,data){
-        return api.request('/products?page='+data.page+'&size='+data.size,'get',data);
+        return api.request('/products?page='+data.page+'&size='+data.size+'&sort=creationDate,desc','get',data);
     },
     getProductsWithPageAndSizeAndCategory(context,data){
-        return api.request('/ext/products-by-category?categoryId='+data.productCategory.id+'&page='+data.page+'&size='+data.size,'get');
+        return api.request('/ext/products-by-category?categoryId='+data.productCategory.id+'&page='+data.page+'&size='+data.size+'&sort=creationDate,desc','get');
     },
     getProductsWithPageAndSizeAndAnime(context,data){
-        return api.request('/ext/products-by-anime?animeId='+data.anime.id+'&page='+data.page+'&size='+data.size,'get');
+        return api.request('/ext/products-by-anime?animeId='+data.anime.id+'&page='+data.page+'&size='+data.size+'&sort=creationDate,desc','get');
     },
     getProductsWithPageAndSizeAndCategoryAndAnime(context,data){
-        return api.request('ext/products-by-category-and-anime?categoryId='+data.productCategory.id+'&animeId='+data.anime.id+'&page='+data.page+'&size='+data.size,'get');
+        return api.request('ext/products-by-category-and-anime?categoryId='+data.productCategory.id+'&animeId='+data.anime.id+'&page='+data.page+'&size='+data.size+'&sort=creationDate,desc','get');
     },
     deleteProduct(context,data){
         return api.request('ext/delete-product?productId='+data.productId,'put');
