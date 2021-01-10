@@ -59,9 +59,7 @@
 
     <v-divider class="mt-5"></v-divider>
 
-    <v-card-text style="white-space: pre-line;">
-        {{product.description}}
-    </v-card-text>
+    <v-card-text style="white-space: pre-line;" v-html="product.description" v-linkified/>
     <v-card-title>
         {{product.price | currency}}
     </v-card-title>

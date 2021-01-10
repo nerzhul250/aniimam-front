@@ -8,9 +8,11 @@ import Vue2Filters from 'vue2-filters'
 import { VTextField } from 'vuetify/lib'  //Globally import VTextField
 import infiniteScroll from 'vue-infinite-scroll'
 import VueGtag from "vue-gtag";
+import linkify from 'vue-linkify'
 
 Vue.config.productionTip = false
 
+Vue.directive('linkified',linkify)
 
 Vue.component('v-text-field', VTextField)
 

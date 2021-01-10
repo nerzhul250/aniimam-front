@@ -115,66 +115,106 @@
                                 </span>
                             </v-tooltip>
                         </div>
-                        <v-text-field
-                            label="Anime relacionado al producto"
-                            v-model="anime_request_query"
-                            append-outer-icon="mdi-magnify"
-                            @click:append-outer="query_anime"
-                            :rules="animeRules"
-                            :loading="isLoadingJikan"
-                        ></v-text-field>
-                        <v-card class="px-5 pt-5" v-if="!!anime_request_results">
-                            <v-window
-                                v-model="onboarding"
-                                reverse
-                            >
-                                <v-window-item
-                                    v-for="(anime_request_result,i) in anime_request_results"
-                                    :key="i"
-                                >
-                                    <v-card class="d-flex align-center justify-center pa-5">
-                                        <v-img
-                                            :src="anime_request_result.image_url"
-                                            max-height="250"
-                                            max-width="125"
-                                        ></v-img>
-                                        <div class="d-flex flex-column justify-center align-center">    
-                                            <v-card-title>
-                                                {{anime_request_result.title}}
-                                            </v-card-title>
-                                            <v-card-actions>
 
-                                                <v-btn
-                                                    icon
-                                                    @click="select_anime(anime_request_result)"
-                                                >
-                                                    <v-icon
-                                                        color="green"
-                                                        v-if="anime.mal_id==anime_request_result.mal_id"
-                                                    >mdi-check-circle</v-icon>
-                                                    <v-icon
-                                                        color="orange"
-                                                        v-else
-                                                    >mdi-check-circle</v-icon>
-                                                </v-btn>
-                                            </v-card-actions>
-                                        </div>
+                        <v-card
+                            class="pa-2"
+                        >
+                            <v-window
+                                v-model="anime_onboarding"
+                            >
+                                <v-window-item>
+                                    <v-autocomplete
+                                        :items="animes"
+                                        item-text="name"
+                                        v-model="anime"
+                                        return-object
+                                        label="Anime relacionado a tu producto"
+                                    >
+                                    </v-autocomplete>
+                                </v-window-item>
+                                <v-window-item>
+                                    <v-text-field
+                                        label="Anime relacionado al producto"
+                                        v-model="anime_request_query"
+                                        append-outer-icon="mdi-magnify"
+                                        @click:append-outer="query_anime"
+                                        :rules="animeRules"
+                                        :loading="isLoadingJikan"
+                                    ></v-text-field>
+                                    <v-card class="px-5 pt-5" v-if="!!anime_request_results">
+                                        <v-window
+                                            v-model="onboarding"
+                                            reverse
+                                        >
+                                            <v-window-item
+                                                v-for="(anime_request_result,i) in anime_request_results"
+                                                :key="i"
+                                            >
+                                                <v-card class="d-flex align-center justify-center pa-5">
+                                                    <v-img
+                                                        :src="anime_request_result.image_url"
+                                                        max-height="250"
+                                                        max-width="125"
+                                                    ></v-img>
+                                                    <div class="d-flex flex-column justify-center align-center">    
+                                                        <v-card-title>
+                                                            {{anime_request_result.title}}
+                                                        </v-card-title>
+                                                        <v-card-actions>
+
+                                                            <v-btn
+                                                                icon
+                                                                @click="select_anime(anime_request_result)"
+                                                            >
+                                                                <v-icon
+                                                                    color="green"
+                                                                    v-if="anime.mal_id==anime_request_result.mal_id"
+                                                                >mdi-check-circle</v-icon>
+                                                                <v-icon
+                                                                    color="orange"
+                                                                    v-else
+                                                                >mdi-check-circle</v-icon>
+                                                            </v-btn>
+                                                        </v-card-actions>
+                                                    </div>
+                                                </v-card>
+                                            </v-window-item>
+                                        </v-window>
+                                        <v-card-actions class="justify-space-between">
+                                            <v-btn
+                                                text
+                                                @click="prev"
+                                            >
+                                                <v-icon>mdi-chevron-left</v-icon>
+                                            </v-btn>
+                                            <v-btn
+                                                text
+                                                @click="next"
+                                            >
+                                                <v-icon>mdi-chevron-right</v-icon>
+                                            </v-btn>
+                                        </v-card-actions>
                                     </v-card>
                                 </v-window-item>
                             </v-window>
-                            <v-card-actions class="justify-space-between">
-                                <v-btn
-                                    text
-                                    @click="prev"
-                                >
-                                    <v-icon>mdi-chevron-left</v-icon>
-                                </v-btn>
-                                <v-btn
-                                    text
-                                    @click="next"
-                                >
-                                    <v-icon>mdi-chevron-right</v-icon>
-                                </v-btn>
+                            <v-card-actions>
+                                <div v-if="anime_onboarding==0">
+                                    No encuentras el anime?
+                                    <v-btn
+                                        icon
+                                        @click="switch_anime_onboarding"
+                                    >
+                                        <v-icon color="orange">mdi-arrow-right-circle</v-icon>
+                                    </v-btn>
+                                </div>
+                                <div v-else>
+                                    <v-btn
+                                        icon
+                                        @click="switch_anime_onboarding"
+                                    >
+                                        <v-icon color="orange">mdi-arrow-left-circle</v-icon>
+                                    </v-btn>
+                                </div>
                             </v-card-actions>
                         </v-card>
                     </v-card>
@@ -365,9 +405,11 @@ export default {
             onboarding: 0,
             product_categories:'',
             onboarding_location:0,
+            anime_onboarding:0,
             user_locations:'',
             address:'',
             city:'Cali',
+            animes:[],
 
             productImages:[],
             price: 0,
@@ -463,6 +505,14 @@ export default {
                 this.msgError = '¿Donde se ubica tu producto?'
             }else{
                 this.isLoading=true;
+                if(this.anime.mal_id==undefined){
+                    let newDefinition={
+                        mal_id:this.anime.jikanId,
+                        image_url:this.anime.imageUrl,
+                        title:this.name
+                    }
+                    this.anime=newDefinition;
+                }
                 ProductRepository.publishProduct(this.title,this.price,this.description,this.stock,
                 this.productCategory,this.anime,this.location,this.productImages).then((res)=>{
                     console.log(res)
@@ -481,6 +531,9 @@ export default {
         },
         switch_onboarding_location(){
             this.onboarding_location=1-this.onboarding_location
+        },
+        switch_anime_onboarding(){
+            this.anime_onboarding=1-this.anime_onboarding;
         },
         next () {
             this.onboarding = this.onboarding + 1 === this.anime_request_results.length
@@ -505,6 +558,9 @@ export default {
         LocationRepository.getUserLocations().then((res)=>{
             this.user_locations=res.data
             console.log(this.user_locations)
+        })
+        ProductRepository.getProductAnimes().then((res)=>{
+            this.animes=res.data;
         })
     },
     watch:{
