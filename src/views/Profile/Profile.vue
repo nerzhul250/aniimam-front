@@ -18,7 +18,7 @@
                     <PublishedProductsPanel/>
                 </v-col>
                 <v-col cols="6">
-                    
+                    <PublishingAutomationPanel/>
                 </v-col>
             </v-row>
         </v-container>
@@ -60,12 +60,13 @@
 import BasicInfoPanel from './BasicInfoPanel'
 import AniimamDetailsPanel from './AniimamDetailsPanel'
 import PublishedProductsPanel from './PublishedProductsPanel'
+import PublishingAutomationPanel from './PublishingAutomationPanel'
 
 import AuthRepository from '../../repositories/auth'
 
 
 export default {
-    components:{BasicInfoPanel, AniimamDetailsPanel, PublishedProductsPanel},
+    components:{BasicInfoPanel, AniimamDetailsPanel, PublishedProductsPanel, PublishingAutomationPanel},
     data(){
         return {
             changes:false,
