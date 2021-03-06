@@ -17,7 +17,7 @@
             >
 
                 <v-img
-                    :src="'https://aniimam-product-images.s3.amazonaws.com'+product.productImages[0].imageUrl"
+                    :src="getProductImage(product)"
                     max-height="130"
                     style="width: 100%; height: 100%;"
                     v-if="!!product.productImages"
@@ -26,17 +26,26 @@
 
 
                 <div v-show="showByIndex!=i" style="height:100%">
-                    <v-card-title class="mt-2">
+                    <v-card-title class="mt-2" v-if="product.price!=-1 && product.price!==0">
                         {{product.price | currency}}
                     </v-card-title>
+                    <v-card-title class="mt-2" v-if="product.price==0">
+                        FREE!
+                    </v-card-title>
+                    <v-card-subtitle class="mt-2" v-if="product.price==-1">
+                        Price in the description
+                    </v-card-subtitle>
                 </div>
                 <div v-show="showByIndex===i" style="height:100%">
-                    <v-card-title
-                        class="mb-n6"
-                    >
-
+                    <v-card-title class="mb-n6" v-if="product.price!=-1 && product.price!==0">
                         {{product.price | currency}}
                     </v-card-title>
+                    <v-card-title class="mb-n6" v-if="product.price==0">
+                        FREE!
+                    </v-card-title>
+                    <v-card-subtitle class="mb-n6" v-if="product.price==-1">
+                        Price in the description
+                    </v-card-subtitle>
                     <v-card-subtitle>
                         {{product.title}}
                     </v-card-subtitle>
@@ -180,6 +189,13 @@ export default {
         }
     },
     methods:{
+        getProductImage(product){
+            if(product.automaticallyAdded){
+                return product.productImages[0].imageUrl;
+            }else{
+                return 'https://aniimam-product-images.s3.amazonaws.com'+product.productImages[0].imageUrl
+            }
+        },
         selectCategory(item){
             this.selectedCategory=item
             this.pageNumber=0;

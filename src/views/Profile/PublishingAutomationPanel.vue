@@ -42,11 +42,11 @@
           </v-card-title>
           <v-card-text>
             Toda publicación que hagas en instagram de tus productos aparecerán en
-            Aniimam diariamente, solo basta con que nos des la dirección de tu perfil
+            Aniimam diariamente, solo basta con que nos des tu nombre de usuario
             como ves en el siguiente campo de texto, y posteriormente le das en Automatizar!
             <v-form v-model="validInstagramForm">
               <v-text-field 
-                label="https://www.instagram.com/aniimam_com"
+                label="aniimam_com"
                 v-model="siteLink"
                 :rules="siteLinkRules"
               ></v-text-field>
@@ -88,8 +88,6 @@ export default {
 
       siteLinkRules: [
         s => !!s || 'Se debe de especificar un sitio',
-        //eslint-disable-next-line
-        s => /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(s) || 'Se debe de especificar un sitio valido'
       ]
     }
   },

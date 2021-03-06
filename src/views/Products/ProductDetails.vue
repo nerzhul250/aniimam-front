@@ -9,7 +9,7 @@
   >
 
     <v-img
-        :src="'https://aniimam-product-images.s3.amazonaws.com'+product.productImages[chosenImage].imageUrl"
+        :src="getProductImage(product.automaticallyAdded,product.productImages[chosenImage])"
     ></v-img>
     <v-divider></v-divider>
     <div class="d-flex justify-center">
@@ -19,7 +19,7 @@
             class="pa-1"
         >
             <v-img
-                :src="'https://aniimam-product-images.s3.amazonaws.com'+productImage.imageUrl"
+                :src="getProductImage(product.automaticallyAdded,productImage)"
                 max-height="50"
                 max-width="50"
                 class="expandable"
@@ -74,6 +74,13 @@ export default {
         }
     },
     methods:{
+        getProductImage(automaticallyAdded,productImage){
+            if(automaticallyAdded){
+                return productImage.imageUrl;
+            }else{
+                return 'https://aniimam-product-images.s3.amazonaws.com'+productImage.imageUrl
+            }
+        },
         onClickOutside(){
             this.$store.commit("product/setProductDetailsOverlay",false)
         },

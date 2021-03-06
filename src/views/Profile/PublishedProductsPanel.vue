@@ -22,7 +22,7 @@
             class="d-flex pa-5 ma-5"
         >
             <v-img
-                :src="'https://aniimam-product-images.s3.amazonaws.com'+product.productImages[0].imageUrl"
+                :src="getProductImage(product)"
                 max-height="100"
                 max-width="100"
             ></v-img>
@@ -73,6 +73,13 @@ export default {
         }
     },
     methods:{
+        getProductImage(product){
+            if(product.automaticallyAdded){
+                return product.productImages[0].imageUrl;
+            }else{
+                return 'https://aniimam-product-images.s3.amazonaws.com'+product.productImages[0].imageUrl
+            }
+        },
         showProductDetails(product){
             this.$store.commit("product/setProductDetails",product)
             this.$store.commit("product/setProductDetailsOverlay",true)
